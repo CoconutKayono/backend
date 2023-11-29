@@ -1,0 +1,101 @@
+spring:
+  security:
+    jwt:
+      key: jwtKey
+      expire: 7
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+  mail:
+    host: smtp.163.com
+    username: coconut_blog@163.com
+    password: CIZGIYPYJDEKUKNO
+    limitTime: 60 # 发送邮件限制时间
+  rabbitmq:
+    addresses: 192.168.43.19
+    port: 5672
+    username: admin
+    password: 1234
+    virtual-host: /note
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/note?characterEncoding=utf-8
+      username: root
+      password: 1234
+      #   Druid数据源配置
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      testWhileIdle: true
+      #配置从连接池获取连接时，是否检查连接有效性，true每次都检查；false不检查。做了这个配置会降低性能。
+      testOnBorrow: false
+      #配置向连接池归还连接时，是否检查连接有效性，true每次都检查；false不检查。做了这个配置会降低性能。
+      testOnReturn: false
+      #打开PsCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j2
+      #合并多个DruidDatasource的监控数据
+      useGlobalDataSourceStat: true
+      #通过connectProperties属性来打开mergeSql功能罗列SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500;
+
+mybatis-plus:
+  # 指定全局配置文件位置
+  #  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件位置
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    map-underscore-to-camel-case: true
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.xiaominfo.knife4j.demo.web
+# knife4j的增强配置，不需要增强可以不配
+# http://localhost:8080/doc.html
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+#  basic:
+#    password: 123456
+#    username: lsc
+#    enable: true
+
+logging:
+  level:
+    com.baomidou.mybatisplus: debug
+
+
+note:
+  url: 'D:/Coconut/note/notes/'
+  author: 1
