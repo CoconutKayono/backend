@@ -11,6 +11,7 @@ import com.coconut.backend.service.NoteService;
 import com.coconut.backend.service.SupportService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -22,22 +23,94 @@ public class SupportServiceImpl extends ServiceImpl<SupportMapper, Support>
     CommentService commentService;
     @Resource
     NoteService noteService;
+    @Transactional
     @Override
-    public Boolean support(LikeVO likeVO) {
-        Integer id = likeVO.id();
-        String type = likeVO.type();
-        if ("Comment".equals(type)){
-            Comment comment = commentService.getById(id);
-            comment.setSupport(comment.getSupport()+1);
-            commentService.updateById(comment);
-        }else if ("Note".equals(type)){
-            Note note = noteService.getById(id);
-            note.setSupport(note.getSupport()+1);
-            noteService.updateById(note);
+    public String likeNote(LikeVO vo) {
+        if (!this.isComment(vo.commentId())) return "内部类型错误,请联系管理员";
+        if (hasNoteLiked(vo)){
+            return "内部错误,请联系管理员";
         }else {
+            supportMapper.insert(Support.initSupport(vo));
+
+            Note note = noteService.getById(vo.noteId());
+            note.increaseLikes();
+            noteService.updateById(note);
             return null;
         }
-        return null;
+    }
+    @Transactional
+    @Override
+    public String unlikeNote(LikeVO vo) {
+        if (!this.isComment(vo.commentId())) return "内部类型错误,请联系管理员";
+        if (!hasNoteLiked(vo)){
+            return "内部错误,请联系管理员";
+        } else {
+            supportMapper.delete(lambdaQuery()
+                    .eq(Support::getUserId,vo.userId())
+                    .eq(Support::getNoteId,vo.noteId())
+                    .eq(Support::getCommentId,null));
+
+            Note note = noteService.getById(vo.noteId());
+            note.decrementLike();
+            noteService.updateById(note);
+            return null;
+        }
+    }
+    @Transactional
+    @Override
+    public String likeComment(LikeVO vo) {
+        if (this.isNote(vo.commentId())) return "内部类型错误,请联系管理员";
+        if (this.hasCommentLiked(vo)){
+            return "内部错误,请联系管理员";
+        }else {
+            supportMapper.insert(Support.initSupport(vo));
+
+            Comment comment = commentService.getById(vo.commentId());
+            comment.increaseLikes();
+            commentService.updateById(comment);
+            return null;
+        }
+    }
+    @Transactional
+    @Override
+    public String unlikeComment(LikeVO vo) {
+        if (this.isNote(vo.commentId())) return "内部类型错误,请联系管理员";
+        if (!hasCommentLiked(vo)){
+            return "内部错误,请联系管理员";
+        }else {
+            supportMapper.delete(lambdaQuery()
+                    .eq(Support::getUserId,vo.userId())
+                    .eq(Support::getNoteId,vo.noteId())
+                    .eq(Support::getCommentId,vo.commentId()));
+
+            Comment comment = commentService.getById(vo.noteId());
+            comment.decrementLike();
+            commentService.updateById(comment);
+            return null;
+        }
+    }
+
+    private Boolean isNote(Integer commentId){
+        return commentId == null;
+    }
+    private Boolean isComment(Integer commentId){
+        return commentId != null;
+    }
+    private Boolean hasNoteLiked(LikeVO likeVO){
+        Support support = supportMapper.selectOne(lambdaQuery()
+                .eq(Support::getUserId, likeVO.userId())
+                .eq(Support::getNoteId, likeVO.noteId())
+                .eq(Support::getCommentId, null));
+        // 返回是否点赞,是为true,否为false
+        return support != null;
+    }
+    private Boolean hasCommentLiked(LikeVO likeVO){
+        Support support = supportMapper.selectOne(lambdaQuery()
+                .eq(Support::getUserId, likeVO.userId())
+                .eq(Support::getNoteId, likeVO.noteId())
+                .eq(Support::getCommentId, likeVO.commentId()));
+        // 返回是否点赞,是为true,否为false
+        return support != null;
     }
 }
 

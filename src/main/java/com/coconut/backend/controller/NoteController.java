@@ -5,10 +5,7 @@ import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.service.NoteService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,16 +29,21 @@ public class NoteController {
         else return RestBean.failure(404, "暂无任何笔记");
     }
 
+    @PutMapping("/view")
+    public RestBean<Void>  viewNote(Integer noteId){
+        String message = noteService.viewNote(noteId);
+        return message == null ? RestBean.success() : RestBean.failure(520,message);
+    }
     /**
      * 加载笔记,需要管理员权限
      *
      * @return RestBean<String>
      */
     @GetMapping("/load")
-    public RestBean<String> loadNotes() {
+    public RestBean<Void> loadNotes() {
         return noteService.loadNotes()
-                ? RestBean.success("成功加载笔记")
-                : RestBean.failure(520, "未知错误");
+                ? RestBean.success()
+                : RestBean.failure(400, "未知错误");
     }
 
 }

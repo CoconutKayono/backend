@@ -64,6 +64,15 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         return toNoteVO(note);
     }
 
+    @Override
+    public String viewNote(Integer noteId) {
+        Note note = noteMapper.selectById(noteId);
+        if (note == null) return "内部错误,请联系管理员";
+        note.increaseView();
+        noteMapper.updateById(note);
+        return null;
+    }
+
     private NoteVO toNoteVO(Note note) {
         // 封装作者视图
         if (note == null) return null;

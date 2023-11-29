@@ -13,4 +13,5 @@ public interface NoteService extends IService<Note> {
 
     NoteVO getByTitle(String title);
 
+    String viewNote(Integer noteId);
 }
