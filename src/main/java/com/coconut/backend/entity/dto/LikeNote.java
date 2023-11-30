@@ -3,7 +3,7 @@ package com.coconut.backend.entity.dto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.coconut.backend.entity.vo.request.LikeVO;
+import com.coconut.backend.entity.vo.request.LikeNoteVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,26 +12,24 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@TableName(value = "support")
+@TableName(value = "like_note")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Support implements Serializable {
+public class LikeNote implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer userId;
     private Integer noteId;
-    private Integer commentId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdTime;
 
-    public static Support initSupport(LikeVO likeVO) {
-        Support support = new Support();
-        support.id = null;
-        support.userId = likeVO.userId();
-        support.noteId = likeVO.noteId();
-        support.commentId = likeVO.commentId();
-        support.createdAt = LocalDateTime.now();
-        return support;
+    public static LikeNote initSupport(LikeNoteVO likeNoteVO) {
+        LikeNote likeNote = new LikeNote();
+        likeNote.id = null;
+        likeNote.userId = likeNoteVO.userId();
+        likeNote.noteId = likeNoteVO.noteId();
+        likeNote.createdTime = LocalDateTime.now();
+        return likeNote;
     }
 }

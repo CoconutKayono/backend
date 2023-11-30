@@ -20,7 +20,7 @@ public class Note {
     private String title;
     private Integer userId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime uploadTime;
+    private LocalDateTime createdTime;
     private Integer view;
     private Integer support;
 
@@ -40,7 +40,7 @@ public class Note {
         Note note = new Note();
         note.setTitle(title);
         note.setUserId(userId);
-        note.setUploadTime(LocalDateTime.now());
+        note.setCreatedTime(LocalDateTime.now());
         note.setView(0);
         note.setSupport(0);
         return note;

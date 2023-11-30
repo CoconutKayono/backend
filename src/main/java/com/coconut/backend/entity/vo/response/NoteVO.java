@@ -24,6 +24,7 @@ public class NoteVO {
     private Integer view;
     private Integer support;
     private String data;
+    private Boolean isLiked;
 
     public static NoteVO initNoteVO(Note note, UserVO userVO, String data) {
         NoteVO noteVO = new NoteVO(userVO);
