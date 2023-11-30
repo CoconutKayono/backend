@@ -5,24 +5,25 @@ import com.coconut.backend.entity.vo.request.LikeVO;
 import com.coconut.backend.service.SupportService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Supplier;
-
-@Controller("/api/support")
+@Slf4j
+@RestController
+@RequestMapping("/api/support")
 public class SupportController {
     @Resource
     SupportService supportService;
 
     @PostMapping("/likeNote")
     public RestBean<Void> likeNote(@RequestBody @Valid LikeVO vo) {
+        System.out.println(vo);
         return this.handleMessage(() -> supportService.likeNote(vo));
     }
 
-    @DeleteMapping("/cancelNote")
+    @PostMapping("/cancelNote")
     public RestBean<Void> cancelNote(@RequestBody @Valid LikeVO vo) {
         return this.handleMessage(() -> supportService.unlikeNote(vo));
     }
@@ -32,7 +33,7 @@ public class SupportController {
         return this.handleMessage(() -> supportService.likeComment(vo));
     }
 
-    @DeleteMapping("/cancelComment")
+    @PostMapping("/cancelComment")
     public RestBean<Void> cancelComment(@RequestBody @Valid LikeVO vo) {
         return this.handleMessage(() -> supportService.unlikeComment(vo));
     }

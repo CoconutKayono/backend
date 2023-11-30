@@ -65,8 +65,10 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     }
 
     @Override
-    public String viewNote(Integer noteId) {
-        Note note = noteMapper.selectById(noteId);
+    public String viewNote(String title) {
+        LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Note::getTitle,title);
+        Note note = noteMapper.selectOne(queryWrapper);
         if (note == null) return "内部错误,请联系管理员";
         note.increaseView();
         noteMapper.updateById(note);
