@@ -35,7 +35,6 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
     /**
      * 一键加载本地的笔记到数据库
-     * @return
      */
     public Boolean loadNotes() {
         File noteFile = new File(noteUtils.getUrl());
