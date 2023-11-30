@@ -11,11 +11,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * 
- * @TableName comments
- */
-@TableName(value ="comments")
+@TableName(value = "comments")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -29,11 +25,13 @@ public class Comment implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
     private Integer support;
-    public void increaseLikes(){
-        this.setSupport(getSupport()+1);
+
+    public void increaseLikes() {
+        this.setSupport(getSupport() + 1);
     }
-    public void decrementLike(){
-        this.setSupport(getSupport()-1);
+
+    public void decrementLike() {
+        this.setSupport(getSupport() - 1);
     }
 
 }

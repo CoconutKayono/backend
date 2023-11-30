@@ -41,11 +41,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(conf ->
-                    conf
-                            .requestMatchers("/api/upload/**").authenticated()
-                            .requestMatchers("/api/user/**").authenticated()
-                            .requestMatchers("/api/note/load").authenticated()
-                            .anyRequest().permitAll()
+                                conf
+                                        .requestMatchers("/api/upload/**").authenticated()
+                                        .requestMatchers("/api/user/**").authenticated()
+                                        .requestMatchers("/api/note/load").authenticated()
+                                        .anyRequest().permitAll()
 //                            .requestMatchers("/api/auth/**").permitAll()
 //                            .anyRequest().authenticated();
                 )

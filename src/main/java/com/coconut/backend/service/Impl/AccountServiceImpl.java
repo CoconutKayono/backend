@@ -41,9 +41,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
 
     /**
      * 使用用户名或邮箱,密码登录
+     *
      * @param text String 用户名或邮箱
-     * @return
-     * @throws UsernameNotFoundException
      */
     @Override
     public UserDetails loadUserByUsername(String text) throws UsernameNotFoundException {
@@ -101,7 +100,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
         String password = passwordEncoder.encode(vo.password());
         boolean update = this.lambdaUpdate().eq(Account::getEmail, email).set(Account::getPassword, password).update();
         if (update) stringRedisTemplate.delete(key);
-        return update ? null :"内部错误,请联系管理员";
+        return update ? null : "内部错误,请联系管理员";
     }
 
 

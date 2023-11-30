@@ -7,5 +7,5 @@ public record EmailResetVO(@Email
                            @Length(min = 4) String email,
                            @Length(min = 6, max = 6) String code,
                            @Length(min = 6, max = 20) String password
-                           ) {
+) {
 }

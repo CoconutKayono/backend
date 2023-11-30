@@ -7,7 +7,10 @@ import com.coconut.backend.entity.vo.request.LikeVO;
 
 public interface SupportService extends IService<Support> {
     String likeNote(LikeVO vo);
+
     String unlikeNote(LikeVO vo);
+
     String likeComment(LikeVO vo);
+
     String unlikeComment(LikeVO vo);
 }

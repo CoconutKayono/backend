@@ -15,6 +15,7 @@ public class NoteVO {
     public NoteVO(UserVO userVO) {
         this.userVO = userVO;
     }
+
     private Integer id;
     private String title;
     private UserVO userVO;
@@ -24,7 +25,7 @@ public class NoteVO {
     private Integer support;
     private String data;
 
-    public static NoteVO initNoteVO(Note note, UserVO userVO,String data) {
+    public static NoteVO initNoteVO(Note note, UserVO userVO, String data) {
         NoteVO noteVO = new NoteVO(userVO);
         BeanUtils.copyProperties(note, noteVO);
         noteVO.setData(data);

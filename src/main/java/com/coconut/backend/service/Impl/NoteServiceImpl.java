@@ -66,7 +66,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Override
     public String viewNote(String title) {
         LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Note::getTitle,title);
+        queryWrapper.eq(Note::getTitle, title);
         Note note = noteMapper.selectOne(queryWrapper);
         if (note == null) return "内部错误,请联系管理员";
         note.increaseView();
@@ -87,6 +87,6 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         String data = FileUtil.readString(file, StandardCharsets.UTF_8);
         String renderer = flexMarkUtils.parseMarkdown(data);
         // 生成并返回NoteVO视图对象
-        return NoteVO.initNoteVO(note, userVO,renderer);
+        return NoteVO.initNoteVO(note, userVO, renderer);
     }
 }

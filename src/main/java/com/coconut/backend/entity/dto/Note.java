@@ -24,15 +24,18 @@ public class Note {
     private Integer view;
     private Integer support;
 
-    public void increaseLikes(){
-        this.setSupport(getSupport()+1);
+    public void increaseLikes() {
+        this.setSupport(getSupport() + 1);
     }
-    public void decrementLike(){
-        this.setSupport(getSupport()-1);
+
+    public void decrementLike() {
+        this.setSupport(getSupport() - 1);
     }
-    public void increaseView(){
-        this.setView(getView()+1);
+
+    public void increaseView() {
+        this.setView(getView() + 1);
     }
+
     public static Note initNote(String title, Integer userId) {
         Note note = new Note();
         note.setTitle(title);

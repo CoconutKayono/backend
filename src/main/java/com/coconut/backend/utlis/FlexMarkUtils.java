@@ -18,14 +18,15 @@ import java.util.List;
 public class FlexMarkUtils {
     @Resource
     JsoupUtils jsoupUtils;
+
     public String parseMarkdown(String markdown) {
         List<Extension> extensions = new ArrayList<>();
         extensions.add(TocExtension.create());
         extensions.add(TablesExtension.create());
 
         DataHolder options = new MutableDataSet()
-                .set(TocExtension.LIST_CLASS,"markdown-catalogue")
-                .set(Parser.EXTENSIONS,extensions);
+                .set(TocExtension.LIST_CLASS, "markdown-catalogue")
+                .set(Parser.EXTENSIONS, extensions);
 
         Parser parser = Parser.builder(options).build();
 

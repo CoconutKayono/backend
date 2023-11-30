@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionController {
     @ExceptionHandler(ValidationException.class)
-    public RestBean<Void> validateException(ValidationException exception){
-        log.warn(("Resolve [{}: {}]"),exception.getClass().getName(),exception.getMessage());
-        return RestBean.failure(400,"请求参数有误");
+    public RestBean<Void> validateException(ValidationException exception) {
+        log.warn(("Resolve [{}: {}]"), exception.getClass().getName(), exception.getMessage());
+        return RestBean.failure(400, "请求参数有误");
     }
 }
