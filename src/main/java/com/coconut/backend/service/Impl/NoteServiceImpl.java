@@ -11,6 +11,7 @@ import com.coconut.backend.mapper.NoteMapper;
 import com.coconut.backend.service.AccountService;
 import com.coconut.backend.service.NoteService;
 import com.coconut.backend.utlis.FlexMarkUtils;
+import com.coconut.backend.utlis.JsoupUtils;
 import com.coconut.backend.utlis.NoteUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Resource
     FlexMarkUtils flexMarkUtils;
     @Resource
+    JsoupUtils jsoupUtils;
+    @Resource
     AccountService accountService;
 
     /**
@@ -40,12 +43,17 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         File noteFile = new File(noteUtils.getUrl());
         File[] fileList = noteFile.listFiles();
         for (File file : Objects.requireNonNull(fileList)) {
-            String path = file.getPath();
-            String title = noteUtils.toTitle(path);
+            String title = noteUtils.toTitle(file.getName());
+
+            String data = this.parseMarkdown(file);
+            String previewImageUrl = jsoupUtils.getFirstImageForPreview((data));
+            System.out.println(previewImageUrl);
+
             LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Note::getTitle, title);
+
             if (!noteMapper.exists(queryWrapper)) {
-                this.save(Note.initNote(title, noteUtils.getAuthor()));
+                this.save(Note.createNote(noteUtils.getAuthorId(),title,data,previewImageUrl));
             }
         }
         return true;
@@ -79,14 +87,14 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         if (note == null) return null;
         Integer userId = note.getUserId();
         Account account = accountService.getById(userId);
-        UserVO userVO = UserVO.initUserVO(account);
-        // 获取文档数据
-        String title = note.getTitle();
-        String path = noteUtils.toPath(title);
-        File file = new File(path);
-        String data = FileUtil.readString(file, StandardCharsets.UTF_8);
-        String renderer = flexMarkUtils.parseMarkdown(data);
+        UserVO userVO = UserVO.createUserVO(account);
         // 生成并返回NoteVO视图对象
-        return NoteVO.initNoteVO(note, userVO, renderer);
+        return NoteVO.createNoteVO(note, userVO);
+    }
+
+    private String parseMarkdown(File markdown){
+        String markdownContent  = FileUtil.readString(markdown, StandardCharsets.UTF_8);
+        String parsedHtml = flexMarkUtils.parseMarkdown(markdownContent);
+        return jsoupUtils.modifyHtml(parsedHtml);
     }
 }

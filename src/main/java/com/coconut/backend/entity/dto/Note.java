@@ -17,8 +17,10 @@ import java.time.LocalDateTime;
 public class Note {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private String title;
     private Integer userId;
+    private String title;
+    private String data;
+    private String previewImageUrl;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
     private Integer view;
@@ -36,10 +38,12 @@ public class Note {
         this.setView(getView() + 1);
     }
 
-    public static Note initNote(String title, Integer userId) {
+    public static Note createNote(Integer userId,String title, String data,String previewImageUrl) {
         Note note = new Note();
-        note.setTitle(title);
         note.setUserId(userId);
+        note.setTitle(title);
+        note.setData(data);
+        note.setPreviewImageUrl(previewImageUrl);
         note.setCreatedTime(LocalDateTime.now());
         note.setView(0);
         note.setSupport(0);

@@ -17,19 +17,19 @@ public class NoteVO {
     }
 
     private Integer id;
-    private String title;
     private UserVO userVO;
+    private String title;
+    private String data;
+    private String previewImageUrl;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime uploadTime;
+    private LocalDateTime createdTime;
     private Integer view;
     private Integer support;
-    private String data;
     private Boolean isLiked;
 
-    public static NoteVO initNoteVO(Note note, UserVO userVO, String data) {
+    public static NoteVO createNoteVO(Note note, UserVO userVO) {
         NoteVO noteVO = new NoteVO(userVO);
         BeanUtils.copyProperties(note, noteVO);
-        noteVO.setData(data);
         return noteVO;
     }
 }

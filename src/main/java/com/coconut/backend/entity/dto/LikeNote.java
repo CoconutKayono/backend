@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.SpringApplication;
 
+import javax.naming.spi.ObjectFactory;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -24,7 +26,7 @@ public class LikeNote implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
-    public static LikeNote initSupport(LikeNoteVO likeNoteVO) {
+    public static LikeNote createLikeNote(LikeNoteVO likeNoteVO) {
         LikeNote likeNote = new LikeNote();
         likeNote.id = null;
         likeNote.userId = likeNoteVO.userId();

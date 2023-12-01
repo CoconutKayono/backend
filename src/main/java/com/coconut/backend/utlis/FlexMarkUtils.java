@@ -16,8 +16,6 @@ import java.util.List;
 
 @Component
 public class FlexMarkUtils {
-    @Resource
-    JsoupUtils jsoupUtils;
 
     public String parseMarkdown(String markdown) {
         List<Extension> extensions = new ArrayList<>();
@@ -34,6 +32,6 @@ public class FlexMarkUtils {
 
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
 
-        return jsoupUtils.modifyHtml(renderer.render(document));
+        return renderer.render(document);
     }
 }

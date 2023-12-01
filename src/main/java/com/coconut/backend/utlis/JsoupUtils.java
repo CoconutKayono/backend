@@ -6,6 +6,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class JsoupUtils {
     /**
@@ -39,5 +41,18 @@ public class JsoupUtils {
             doc.body().appendChild(divContent);
         }
         return doc.html();
+    }
+
+    public String getFirstImageForPreview(String html){
+        Document doc = Jsoup.parse(html);
+        Elements imgElements = doc.select("img");
+
+        if (!imgElements.isEmpty()) {
+            Element firstImgElement = imgElements.first();
+
+            return Objects.requireNonNull(firstImgElement).attr("src");
+        } else {
+            return "No images found on the page.";
+        }
     }
 }

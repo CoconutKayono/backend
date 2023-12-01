@@ -23,12 +23,12 @@ public class LikeNoteController {
 
     @PostMapping("/like")
     public RestBean<LikeVO> like(@RequestBody @Valid LikeNoteVO vo) {
-        return this.handleMessage(() -> likeNoteService.likeNote(vo));
+        return this.handleMessage(() -> likeNoteService.like(vo));
     }
 
     @PostMapping("/unlike")
     public RestBean<LikeVO> unlike(@RequestBody @Valid LikeNoteVO vo) {
-        return this.handleMessage(() -> likeNoteService.unlikeNote(vo));
+        return this.handleMessage(() -> likeNoteService.unlike(vo));
     }
 
 

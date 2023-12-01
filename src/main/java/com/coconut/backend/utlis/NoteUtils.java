@@ -14,12 +14,12 @@ public class NoteUtils {
         return url;
     }
 
-    public Integer getAuthor() {
+    public Integer getAuthorId() {
         return authorId;
     }
 
-    public String toTitle(String path) {
-        return path.substring(path.lastIndexOf("\\") + 1).replace(".md", "");
+    public String toTitle(String fileName) {
+        return fileName.replace(".md", "");
     }
 
     public String toPath(String title) {

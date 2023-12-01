@@ -20,11 +20,16 @@ public class AccountController {
     AccountService accountService;
 
 
+    /**
+     * 需要登录权限
+     * @param request
+     * @return
+     */
     @GetMapping("/info")
     public RestBean<UserVO> userInfo(HttpServletRequest request) {
         Integer id = (Integer) request.getAttribute("id");
         Account account = accountService.getById(id);
-        UserVO userVO = UserVO.initUserVO(account);
+        UserVO userVO = UserVO.createUserVO(account);
         return RestBean.success(userVO);
     }
 

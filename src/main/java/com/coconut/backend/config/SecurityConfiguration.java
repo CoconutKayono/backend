@@ -22,9 +22,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatchers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @Slf4j
 @Configuration
@@ -39,12 +42,17 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        String[] requestMatchers = {
+                "/api/upload",
+                "/api/user/**",
+                "/api/note/load",
+                "/api/likeNote/**",
+                "/api/likeComment/**"
+        };
         return httpSecurity
                 .authorizeHttpRequests(conf ->
                                 conf
-                                        .requestMatchers("/api/upload/**").authenticated()
-                                        .requestMatchers("/api/user/**").authenticated()
-                                        .requestMatchers("/api/note/load").authenticated()
+                                        .requestMatchers(requestMatchers).authenticated()
                                         .anyRequest().permitAll()
 //                            .requestMatchers("/api/auth/**").permitAll()
 //                            .anyRequest().authenticated();
