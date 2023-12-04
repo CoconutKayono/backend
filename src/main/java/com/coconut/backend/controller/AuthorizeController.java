@@ -45,8 +45,8 @@ public class AuthorizeController {
         return this.handleMessage(() -> accountService.resetEmailPassword(vo));
     }
 
-    private RestBean<Void> handleMessage(Supplier<String> action) {
-        String message = action.get();
+    private RestBean<Void> handleMessage(Supplier<String> supplier) {
+        String message = supplier.get();
         return message == null ? RestBean.success() : RestBean.failure(400, message);
     }
 }
