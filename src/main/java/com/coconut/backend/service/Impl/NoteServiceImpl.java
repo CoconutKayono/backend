@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -53,7 +54,16 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
             queryWrapper.eq(Note::getTitle, title);
 
             if (!noteMapper.exists(queryWrapper)) {
-                this.save(Note.newInstance(noteUtils.getAuthorId(),title,data,previewImageUrl));
+                this.save(new Note.Builder()
+                        .id(null)
+                        .userId(noteUtils.getAuthorId())
+                        .title(title)
+                        .data(data)
+                        .previewImageUrl(previewImageUrl)
+                        .createdTime(LocalDateTime.now())
+                        .view(0)
+                        .support(0)
+                        .build());
             }
         }
         return true;

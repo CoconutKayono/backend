@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
  */
 @Data
 public class NoteVO {
-    public NoteVO(UserVO userVO) {
-        this.userVO = userVO;
-    }
 
     private Integer id;
     private UserVO userVO;
@@ -28,8 +25,9 @@ public class NoteVO {
     private Boolean isLiked;
 
     public static NoteVO newInstance(Note note, UserVO userVO) {
-        NoteVO noteVO = new NoteVO(userVO);
+        NoteVO noteVO = new NoteVO();
         BeanUtils.copyProperties(note, noteVO);
+        noteVO.setUserVO(userVO);
         return noteVO;
     }
 }

@@ -15,6 +15,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @TableName("note")
 public class Note {
+    private Note(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.title = builder.title;
+        this.data = builder.data;
+        this.previewImageUrl = builder.previewImageUrl;
+        this.createdTime = builder.createdTime;
+        this.view = builder.view;
+        this.support = builder.support;
+    }
+
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer userId;
@@ -38,15 +49,60 @@ public class Note {
         this.setView(getView() + 1);
     }
 
-    public static Note newInstance(Integer userId, String title, String data, String previewImageUrl) {
-        Note note = new Note();
-        note.setUserId(userId);
-        note.setTitle(title);
-        note.setData(data);
-        note.setPreviewImageUrl(previewImageUrl);
-        note.setCreatedTime(LocalDateTime.now());
-        note.setView(0);
-        note.setSupport(0);
-        return note;
+
+    public static class Builder {
+        private Integer id;
+        private Integer userId;
+        private String title;
+        private String data;
+        private String previewImageUrl;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime createdTime;
+        private Integer view;
+        private Integer support;
+
+        public Builder id(Integer val) {
+            id = val;
+            return this;
+        }
+
+        public Builder userId(Integer val) {
+            userId = val;
+            return this;
+        }
+
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        public Builder data(String val) {
+            data = val;
+            return this;
+        }
+
+        public Builder previewImageUrl(String val) {
+            previewImageUrl = val;
+            return this;
+        }
+
+        public Builder createdTime(LocalDateTime val) {
+            createdTime = val;
+            return this;
+        }
+
+        public Builder view(Integer val) {
+            view = val;
+            return this;
+        }
+
+        public Builder support(Integer val) {
+            support = val;
+            return this;
+        }
+
+        public Note build() {
+            return new Note(this);
+        }
     }
 }
