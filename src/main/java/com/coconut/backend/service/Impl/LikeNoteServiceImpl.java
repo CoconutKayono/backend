@@ -45,9 +45,10 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
             return this.like(vo);
         } else {
             likeNoteMapper.delete(Wrappers.<LikeNote>lambdaQuery()
-                            .eq(LikeNote::getUserId, vo.userId())
-                            .eq(LikeNote::getNoteId, vo.noteId())
+                    .eq(LikeNote::getUserId, vo.userId())
+                    .eq(LikeNote::getNoteId, vo.noteId())
             );
+
             Note note = noteService.getById(vo.noteId());
             note.decrementLike();
             noteService.updateById(note);
@@ -56,10 +57,10 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
     }
 
 
-    private Boolean hasLiked(LikeNoteVO vo) {
+    private Boolean hasLiked(LikeNoteVO likeNoteVO) {
         LikeNote likeNote = likeNoteMapper.selectOne(Wrappers.<LikeNote>lambdaQuery()
-                .eq(LikeNote::getUserId, vo.userId())
-                .eq(LikeNote::getNoteId, vo.noteId())
+                .eq(LikeNote::getUserId, likeNoteVO.userId())
+                .eq(LikeNote::getNoteId, likeNoteVO.noteId())
         );
         // 返回是否点赞,是为true,否为false
         return likeNote != null;
