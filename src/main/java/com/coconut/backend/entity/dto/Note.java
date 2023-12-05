@@ -15,17 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @TableName("note")
 public class Note {
-    private Note(Builder builder) {
-        this.id = builder.id;
-        this.userId = builder.userId;
-        this.title = builder.title;
-        this.data = builder.data;
-        this.previewImageUrl = builder.previewImageUrl;
-        this.createdTime = builder.createdTime;
-        this.view = builder.view;
-        this.support = builder.support;
-    }
-
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer userId;
@@ -104,5 +93,15 @@ public class Note {
         public Note build() {
             return new Note(this);
         }
+    }
+    private Note(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.title = builder.title;
+        this.data = builder.data;
+        this.previewImageUrl = builder.previewImageUrl;
+        this.createdTime = builder.createdTime;
+        this.view = builder.view;
+        this.support = builder.support;
     }
 }
