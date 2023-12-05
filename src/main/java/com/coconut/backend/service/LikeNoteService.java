@@ -11,5 +11,4 @@ public interface LikeNoteService extends IService<LikeNote> {
 
     LikeVO unlike(LikeNoteVO vo);
 
-    Boolean hasLiked(LikeNoteVO likeNoteVO);
 }

@@ -7,10 +7,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.Account;
+import com.coconut.backend.entity.dto.LikeNote;
 import com.coconut.backend.entity.dto.Note;
 import com.coconut.backend.entity.vo.request.LikeNoteVO;
 import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.entity.vo.response.UserVO;
+import com.coconut.backend.mapper.LikeNoteMapper;
 import com.coconut.backend.mapper.NoteMapper;
 import com.coconut.backend.service.AccountService;
 import com.coconut.backend.service.LikeNoteService;
@@ -37,7 +39,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Resource
     NoteMapper noteMapper;
     @Resource
-    LikeNoteService likeNoteService;
+    LikeNoteMapper likeNoteMapper;
     @Resource
     FlexMarkUtils flexMarkUtils;
     @Resource
@@ -83,7 +85,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Override
     public List<NoteVO> listNoteVOs(Integer id) {
         List<Note> notes = noteMapper.selectList(Wrappers.emptyWrapper());
-        return notes.stream().map(this::toNoteVO).collect(Collectors.toList());
+        return notes.stream().map((note -> this.toNoteVO(note,id))).collect(Collectors.toList());
     }
 
     @Override
@@ -125,7 +127,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         UserVO userVO = UserVO.newInstance(account);
         // 检测用户是否为该文章点过赞
         LikeNoteVO likeNoteVO = new LikeNoteVO(userId, note.getId());
-        Boolean hasLiked = likeNoteService.hasLiked(likeNoteVO);
+        Boolean hasLiked = this.hasLiked(likeNoteVO);
         // 生成并返回NoteVO视图对象
         return NoteVO.newInstance(note, userVO,hasLiked);
     }
@@ -134,5 +136,14 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         String markdownContent  = FileUtil.readString(markdown, StandardCharsets.UTF_8);
         String parsedHtml = flexMarkUtils.parseMarkdown(markdownContent);
         return jsoupUtils.modifyHtml(parsedHtml);
+    }
+
+    private Boolean hasLiked(LikeNoteVO likeNoteVO) {
+        LikeNote likeNote = likeNoteMapper.selectOne(Wrappers.<LikeNote>lambdaQuery()
+                .eq(LikeNote::getUserId, likeNoteVO.userId())
+                .eq(LikeNote::getNoteId, likeNoteVO.noteId())
+        );
+        // 返回是否点赞,是为true,否为false
+        return likeNote != null;
     }
 }

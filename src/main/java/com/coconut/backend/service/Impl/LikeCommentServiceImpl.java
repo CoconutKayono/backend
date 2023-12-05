@@ -55,8 +55,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         }
     }
 
-    @Override
-    public Boolean hasLiked(LikeCommentVO vo) {
+    private Boolean hasLiked(LikeCommentVO vo) {
         LikeComment likeComment = likeCommentMapper.selectOne(Wrappers.<LikeComment>lambdaQuery()
                 .eq(LikeComment::getUserId, vo.userId())
                 .eq(LikeComment::getNoteId, vo.noteId())

@@ -8,6 +8,7 @@ import com.coconut.backend.entity.dto.Note;
 import com.coconut.backend.entity.vo.request.LikeNoteVO;
 import com.coconut.backend.entity.vo.response.LikeVO;
 import com.coconut.backend.mapper.LikeNoteMapper;
+import com.coconut.backend.mapper.NoteMapper;
 import com.coconut.backend.service.LikeNoteService;
 import com.coconut.backend.service.NoteService;
 import jakarta.annotation.Resource;
@@ -21,7 +22,7 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
     @Resource
     LikeNoteMapper likeNoteMapper;
     @Resource
-    NoteService noteService;
+    NoteMapper noteMapper;
 
     @Transactional
     @Override
@@ -31,9 +32,9 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         } else {
             likeNoteMapper.insert(LikeNote.newInstance(vo));
 
-            Note note = noteService.getById(vo.noteId());
+            Note note = noteMapper.selectById(vo.noteId());
             note.increaseLikes();
-            noteService.updateById(note);
+            noteMapper.updateById(note);
             return new LikeVO(note.getSupport(), true);
         }
     }
@@ -49,15 +50,14 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
                     .eq(LikeNote::getNoteId, vo.noteId())
             );
 
-            Note note = noteService.getById(vo.noteId());
+            Note note = noteMapper.selectById(vo.noteId());
             note.decrementLike();
-            noteService.updateById(note);
+            noteMapper.updateById(note);
             return new LikeVO(note.getSupport(), false);
         }
     }
 
-    @Override
-    public Boolean hasLiked(LikeNoteVO likeNoteVO) {
+    private Boolean hasLiked(LikeNoteVO likeNoteVO) {
         LikeNote likeNote = likeNoteMapper.selectOne(Wrappers.<LikeNote>lambdaQuery()
                 .eq(LikeNote::getUserId, likeNoteVO.userId())
                 .eq(LikeNote::getNoteId, likeNoteVO.noteId())

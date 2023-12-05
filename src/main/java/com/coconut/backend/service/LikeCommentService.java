@@ -10,5 +10,4 @@ public interface LikeCommentService extends IService<LikeComment> {
 
     LikeVO unlike(LikeCommentVO vo);
 
-    Boolean hasLiked(LikeCommentVO vo);
 }
