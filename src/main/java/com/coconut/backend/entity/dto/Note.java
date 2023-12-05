@@ -94,6 +94,7 @@ public class Note {
             return new Note(this);
         }
     }
+
     private Note(Builder builder) {
         this.id = builder.id;
         this.userId = builder.userId;

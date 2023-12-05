@@ -8,9 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.SpringApplication;
 
-import javax.naming.spi.ObjectFactory;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

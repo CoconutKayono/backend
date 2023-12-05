@@ -43,7 +43,7 @@ public class JsoupUtils {
         return doc.html();
     }
 
-    public String getFirstImageForPreview(String html){
+    public String getFirstImageForPreview(String html) {
         Document doc = Jsoup.parse(html);
         Elements imgElements = doc.select("img");
 

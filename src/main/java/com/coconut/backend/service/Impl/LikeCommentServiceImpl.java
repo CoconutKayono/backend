@@ -1,14 +1,13 @@
 package com.coconut.backend.service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.Comment;
 import com.coconut.backend.entity.dto.LikeComment;
 import com.coconut.backend.entity.vo.request.LikeCommentVO;
 import com.coconut.backend.entity.vo.response.LikeVO;
+import com.coconut.backend.mapper.CommentMapper;
 import com.coconut.backend.mapper.LikeCommentMapper;
-import com.coconut.backend.service.CommentService;
 import com.coconut.backend.service.LikeCommentService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
     @Resource
     LikeCommentMapper likeCommentMapper;
     @Resource
-    CommentService commentService;
+    CommentMapper commentMapper;
 
     @Transactional
     @Override
@@ -30,9 +29,9 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         } else {
             likeCommentMapper.insert(LikeComment.newInstance(vo));
 
-            Comment comment = commentService.getById(vo.commentId());
+            Comment comment = commentMapper.selectById(vo.commentId());
             comment.increaseLikes();
-            commentService.updateById(comment);
+            commentMapper.updateById(comment);
             return new LikeVO(comment.getSupport(), true);
         }
     }
@@ -48,9 +47,9 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
                     .eq(LikeComment::getNoteId, vo.noteId())
                     .eq(LikeComment::getCommentId, vo.commentId()));
 
-            Comment comment = commentService.getById(vo.noteId());
+            Comment comment = commentMapper.selectById(vo.noteId());
             comment.decrementLike();
-            commentService.updateById(comment);
+            commentMapper.updateById(comment);
             return new LikeVO(comment.getSupport(), false);
         }
     }

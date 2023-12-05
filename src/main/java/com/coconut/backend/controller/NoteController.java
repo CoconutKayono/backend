@@ -30,9 +30,9 @@ public class NoteController {
     public RestBean<List<NoteVO>> list(HttpServletRequest request) {
         Integer id = (Integer) request.getAttribute("id");
         List<NoteVO> notes;
-        if (id ==null){
+        if (id == null) {
             notes = noteService.listNoteVOs();
-        }else {
+        } else {
             notes = noteService.listNoteVOs(id);
         }
         if (notes != null) return RestBean.success(notes);

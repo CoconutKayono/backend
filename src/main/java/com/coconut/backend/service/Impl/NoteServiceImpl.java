@@ -1,9 +1,6 @@
 package com.coconut.backend.service.Impl;
 
 import cn.hutool.core.io.FileUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.Account;
@@ -12,16 +9,14 @@ import com.coconut.backend.entity.dto.Note;
 import com.coconut.backend.entity.vo.request.LikeNoteVO;
 import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.entity.vo.response.UserVO;
+import com.coconut.backend.mapper.AccountMapper;
 import com.coconut.backend.mapper.LikeNoteMapper;
 import com.coconut.backend.mapper.NoteMapper;
-import com.coconut.backend.service.AccountService;
-import com.coconut.backend.service.LikeNoteService;
 import com.coconut.backend.service.NoteService;
 import com.coconut.backend.utlis.FlexMarkUtils;
 import com.coconut.backend.utlis.JsoupUtils;
 import com.coconut.backend.utlis.NoteUtils;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -45,7 +40,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Resource
     JsoupUtils jsoupUtils;
     @Resource
-    AccountService accountService;
+    AccountMapper accountMapper;
 
     /**
      * 一键加载本地的笔记到数据库
@@ -85,7 +80,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Override
     public List<NoteVO> listNoteVOs(Integer id) {
         List<Note> notes = noteMapper.selectList(Wrappers.emptyWrapper());
-        return notes.stream().map((note -> this.toNoteVO(note,id))).collect(Collectors.toList());
+        return notes.stream().map((note -> this.toNoteVO(note, id))).collect(Collectors.toList());
     }
 
     @Override
@@ -96,8 +91,6 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
     /**
      * 浏览笔记
-     * @param title
-     * @return
      */
     @Override
     public String viewNote(String title) {
@@ -109,31 +102,32 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         noteMapper.updateById(note);
         return null;
     }
+
     private NoteVO toNoteVO(Note note) {
         // 封装作者视图
         if (note == null) return null;
         Integer userId = note.getUserId();
-        Account account = accountService.getById(userId);
+        Account account = accountMapper.selectById(userId);
         UserVO userVO = UserVO.newInstance(account);
         // 生成并返回NoteVO视图对象
-        return NoteVO.newInstance(note, userVO,false);
+        return NoteVO.newInstance(note, userVO, false);
     }
 
-    private NoteVO toNoteVO(Note note,Integer id) {
+    private NoteVO toNoteVO(Note note, Integer id) {
         // 封装作者视图
         if (note == null) return null;
         Integer userId = note.getUserId();
-        Account account = accountService.getById(userId);
+        Account account = accountMapper.selectById(userId);
         UserVO userVO = UserVO.newInstance(account);
         // 检测用户是否为该文章点过赞
         LikeNoteVO likeNoteVO = new LikeNoteVO(userId, note.getId());
         Boolean hasLiked = this.hasLiked(likeNoteVO);
         // 生成并返回NoteVO视图对象
-        return NoteVO.newInstance(note, userVO,hasLiked);
+        return NoteVO.newInstance(note, userVO, hasLiked);
     }
 
-    private String parseMarkdown(File markdown){
-        String markdownContent  = FileUtil.readString(markdown, StandardCharsets.UTF_8);
+    private String parseMarkdown(File markdown) {
+        String markdownContent = FileUtil.readString(markdown, StandardCharsets.UTF_8);
         String parsedHtml = flexMarkUtils.parseMarkdown(markdownContent);
         return jsoupUtils.modifyHtml(parsedHtml);
     }

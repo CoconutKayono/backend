@@ -22,8 +22,6 @@ public class AccountController {
 
     /**
      * 需要登录权限
-     * @param request
-     * @return
      */
     @GetMapping("/info")
     public RestBean<UserVO> userInfo(HttpServletRequest request) {
