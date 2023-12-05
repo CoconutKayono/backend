@@ -43,8 +43,7 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         if (!this.hasLiked(vo)) {
             return this.like(vo);
         } else {
-            LambdaQueryWrapper<LikeNote> queryWrapper = new LambdaQueryWrapper<>();
-            likeNoteMapper.delete(queryWrapper
+            likeNoteMapper.delete(new LambdaQueryWrapper<LikeNote>()
                     .eq(LikeNote::getUserId, vo.userId())
                     .eq(LikeNote::getNoteId, vo.noteId())
             );
