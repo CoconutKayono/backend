@@ -42,8 +42,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         if (!this.hasLiked(vo)) {
             return this.like(vo);
         } else {
-            LambdaQueryWrapper<LikeComment> queryWrapper = new LambdaQueryWrapper<>();
-            likeCommentMapper.delete(queryWrapper
+            likeCommentMapper.delete(new LambdaQueryWrapper<LikeComment>()
                     .eq(LikeComment::getUserId, vo.userId())
                     .eq(LikeComment::getNoteId, vo.noteId())
                     .eq(LikeComment::getCommentId, vo.commentId()));
@@ -56,8 +55,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
     }
 
     private Boolean hasLiked(LikeCommentVO vo) {
-        LambdaQueryWrapper<LikeComment> queryWrapper = new LambdaQueryWrapper<>();
-        LikeComment likeComment = likeCommentMapper.selectOne(queryWrapper
+        LikeComment likeComment = likeCommentMapper.selectOne(new LambdaQueryWrapper<LikeComment>()
                 .eq(LikeComment::getUserId, vo.userId())
                 .eq(LikeComment::getNoteId, vo.noteId())
                 .eq(LikeComment::getCommentId, vo.commentId()));

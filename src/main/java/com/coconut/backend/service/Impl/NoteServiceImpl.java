@@ -1,7 +1,10 @@
 package com.coconut.backend.service.Impl;
 
 import cn.hutool.core.io.FileUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.Account;
 import com.coconut.backend.entity.dto.Note;
@@ -54,7 +57,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
             queryWrapper.eq(Note::getTitle, title);
 
             if (!noteMapper.exists(queryWrapper)) {
-                this.save(new Note.Builder()
+                noteMapper.insert(new Note.Builder()
                         .id(null)
                         .userId(noteUtils.getAuthorId())
                         .title(title)
@@ -71,7 +74,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
     @Override
     public List<NoteVO> listNoteVOs() {
-        List<Note> notes = this.list();
+        List<Note> notes = noteMapper.selectList(Wrappers.emptyWrapper());
         return notes.stream().map(this::toNoteVO).collect(Collectors.toList());
     }
 
