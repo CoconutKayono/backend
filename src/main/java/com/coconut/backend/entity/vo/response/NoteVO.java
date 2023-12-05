@@ -27,7 +27,7 @@ public class NoteVO {
     private Integer support;
     private Boolean isLiked;
 
-    public static NoteVO createNoteVO(Note note, UserVO userVO) {
+    public static NoteVO newInstance(Note note, UserVO userVO) {
         NoteVO noteVO = new NoteVO(userVO);
         BeanUtils.copyProperties(note, noteVO);
         return noteVO;

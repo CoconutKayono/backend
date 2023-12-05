@@ -28,7 +28,7 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         if (this.hasLiked(vo)) {
             return this.unlike(vo);
         } else {
-            likeNoteMapper.insert(LikeNote.createLikeNote(vo));
+            likeNoteMapper.insert(LikeNote.newInstance(vo));
 
             Note note = noteService.getById(vo.noteId());
             note.increaseLikes();

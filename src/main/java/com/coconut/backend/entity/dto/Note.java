@@ -38,7 +38,7 @@ public class Note {
         this.setView(getView() + 1);
     }
 
-    public static Note createNote(Integer userId,String title, String data,String previewImageUrl) {
+    public static Note newInstance(Integer userId, String title, String data, String previewImageUrl) {
         Note note = new Note();
         note.setUserId(userId);
         note.setTitle(title);

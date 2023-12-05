@@ -25,7 +25,7 @@ public class LikeComment implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
-    public static LikeComment createLikeComment(LikeCommentVO vo) {
+    public static LikeComment newInstance(LikeCommentVO vo) {
         LikeComment likeComment = new LikeComment();
         likeComment.id = null;
         likeComment.userId = vo.userId();

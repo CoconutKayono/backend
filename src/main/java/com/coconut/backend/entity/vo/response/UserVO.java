@@ -20,7 +20,7 @@ public class UserVO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registerTime;
 
-    public static UserVO createUserVO(Account account) {
+    public static UserVO newInstance(Account account) {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(account, userVO);
         return userVO;

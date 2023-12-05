@@ -26,7 +26,7 @@ public class LikeNote implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
-    public static LikeNote createLikeNote(LikeNoteVO likeNoteVO) {
+    public static LikeNote newInstance(LikeNoteVO likeNoteVO) {
         LikeNote likeNote = new LikeNote();
         likeNote.id = null;
         likeNote.userId = likeNoteVO.userId();

@@ -29,7 +29,7 @@ public class AccountController {
     public RestBean<UserVO> userInfo(HttpServletRequest request) {
         Integer id = (Integer) request.getAttribute("id");
         Account account = accountService.getById(id);
-        UserVO userVO = UserVO.createUserVO(account);
+        UserVO userVO = UserVO.newInstance(account);
         return RestBean.success(userVO);
     }
 

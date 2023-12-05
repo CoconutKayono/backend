@@ -53,7 +53,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
             queryWrapper.eq(Note::getTitle, title);
 
             if (!noteMapper.exists(queryWrapper)) {
-                this.save(Note.createNote(noteUtils.getAuthorId(),title,data,previewImageUrl));
+                this.save(Note.newInstance(noteUtils.getAuthorId(),title,data,previewImageUrl));
             }
         }
         return true;
@@ -72,7 +72,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     }
 
     @Override
-    public String viewNote(String title) {
+    public String getNote(String title) {
         LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Note::getTitle, title);
         Note note = noteMapper.selectOne(queryWrapper);
@@ -87,9 +87,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         if (note == null) return null;
         Integer userId = note.getUserId();
         Account account = accountService.getById(userId);
-        UserVO userVO = UserVO.createUserVO(account);
+        UserVO userVO = UserVO.newInstance(account);
         // 生成并返回NoteVO视图对象
-        return NoteVO.createNoteVO(note, userVO);
+        return NoteVO.newInstance(note, userVO);
     }
 
     private String parseMarkdown(File markdown){

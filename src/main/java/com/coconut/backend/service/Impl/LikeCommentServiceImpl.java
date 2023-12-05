@@ -27,7 +27,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         if (this.hasLiked(vo)) {
             return this.unlike(vo);
         } else {
-            likeCommentMapper.insert(LikeComment.createLikeComment(vo));
+            likeCommentMapper.insert(LikeComment.newInstance(vo));
 
             Comment comment = commentService.getById(vo.commentId());
             comment.increaseLikes();

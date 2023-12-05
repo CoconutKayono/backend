@@ -34,7 +34,7 @@ public class NoteController {
 
     @GetMapping("/view/{title}")
     public RestBean<Void> viewNote(@PathVariable String title) {
-        String message = noteService.viewNote(title);
+        String message = noteService.getNote(title);
         return message == null ? RestBean.success() : RestBean.failure(520, message);
     }
 
