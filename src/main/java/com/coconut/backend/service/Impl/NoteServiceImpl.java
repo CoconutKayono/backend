@@ -51,12 +51,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
             String data = this.parseMarkdown(file);
             String previewImageUrl = jsoupUtils.getFirstImageForPreview((data));
-            System.out.println(previewImageUrl);
 
-            LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(Note::getTitle, title);
-
-            if (!noteMapper.exists(queryWrapper)) {
+            if (!noteMapper.exists(Wrappers.<Note>lambdaQuery()
+                    .eq(Note::getTitle, title))) {
                 noteMapper.insert(new Note.Builder()
                         .id(null)
                         .userId(noteUtils.getAuthorId())
@@ -91,7 +88,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
      */
     @Override
     public String viewNote(String title) {
-        Note note = noteMapper.selectOne(new LambdaQueryWrapper<Note>().eq(Note::getTitle, title));
+        Note note = noteMapper.selectOne(Wrappers.<Note>lambdaQuery()
+                .eq(Note::getTitle, title)
+        );
         if (note == null) return "内部错误,请联系管理员";
         note.increaseView();
         noteMapper.updateById(note);

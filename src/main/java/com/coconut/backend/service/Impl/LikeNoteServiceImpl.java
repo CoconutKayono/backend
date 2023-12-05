@@ -1,6 +1,7 @@
 package com.coconut.backend.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.LikeNote;
 import com.coconut.backend.entity.dto.Note;
@@ -43,11 +44,10 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         if (!this.hasLiked(vo)) {
             return this.like(vo);
         } else {
-            likeNoteMapper.delete(new LambdaQueryWrapper<LikeNote>()
-                    .eq(LikeNote::getUserId, vo.userId())
-                    .eq(LikeNote::getNoteId, vo.noteId())
+            likeNoteMapper.delete(Wrappers.<LikeNote>lambdaQuery()
+                            .eq(LikeNote::getUserId, vo.userId())
+                            .eq(LikeNote::getNoteId, vo.noteId())
             );
-
             Note note = noteService.getById(vo.noteId());
             note.decrementLike();
             noteService.updateById(note);
@@ -56,11 +56,10 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
     }
 
 
-    private Boolean hasLiked(LikeNoteVO likeNoteVO) {
-        LambdaQueryWrapper<LikeNote> queryWrapper = new LambdaQueryWrapper<>();
-        LikeNote likeNote = likeNoteMapper.selectOne(queryWrapper
-                .eq(LikeNote::getUserId, likeNoteVO.userId())
-                .eq(LikeNote::getNoteId, likeNoteVO.noteId())
+    private Boolean hasLiked(LikeNoteVO vo) {
+        LikeNote likeNote = likeNoteMapper.selectOne(Wrappers.<LikeNote>lambdaQuery()
+                .eq(LikeNote::getUserId, vo.userId())
+                .eq(LikeNote::getNoteId, vo.noteId())
         );
         // 返回是否点赞,是为true,否为false
         return likeNote != null;

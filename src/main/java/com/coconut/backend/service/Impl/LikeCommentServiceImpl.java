@@ -1,6 +1,7 @@
 package com.coconut.backend.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.Comment;
 import com.coconut.backend.entity.dto.LikeComment;
@@ -42,7 +43,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         if (!this.hasLiked(vo)) {
             return this.like(vo);
         } else {
-            likeCommentMapper.delete(new LambdaQueryWrapper<LikeComment>()
+            likeCommentMapper.delete(Wrappers.<LikeComment>lambdaQuery()
                     .eq(LikeComment::getUserId, vo.userId())
                     .eq(LikeComment::getNoteId, vo.noteId())
                     .eq(LikeComment::getCommentId, vo.commentId()));
@@ -55,7 +56,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
     }
 
     private Boolean hasLiked(LikeCommentVO vo) {
-        LikeComment likeComment = likeCommentMapper.selectOne(new LambdaQueryWrapper<LikeComment>()
+        LikeComment likeComment = likeCommentMapper.selectOne(Wrappers.<LikeComment>lambdaQuery()
                 .eq(LikeComment::getUserId, vo.userId())
                 .eq(LikeComment::getNoteId, vo.noteId())
                 .eq(LikeComment::getCommentId, vo.commentId()));
