@@ -56,8 +56,8 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         }
     }
 
-
-    private Boolean hasLiked(LikeNoteVO likeNoteVO) {
+    @Override
+    public Boolean hasLiked(LikeNoteVO likeNoteVO) {
         LikeNote likeNote = likeNoteMapper.selectOne(Wrappers.<LikeNote>lambdaQuery()
                 .eq(LikeNote::getUserId, likeNoteVO.userId())
                 .eq(LikeNote::getNoteId, likeNoteVO.noteId())

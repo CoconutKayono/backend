@@ -4,6 +4,7 @@ import com.coconut.backend.entity.RestBean;
 import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.service.NoteService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +27,17 @@ public class NoteController {
     }
 
     @GetMapping("/list")
-    public RestBean<List<NoteVO>> list() {
-        List<NoteVO> notes = noteService.listNoteVOs();
+    public RestBean<List<NoteVO>> list(HttpServletRequest request) {
+        Integer id = (Integer) request.getAttribute("id");
+        List<NoteVO> notes;
+        if (id ==null){
+            notes = noteService.listNoteVOs();
+        }else {
+            notes = noteService.listNoteVOs(id);
+        }
         if (notes != null) return RestBean.success(notes);
         else return RestBean.failure(404, "暂无任何笔记");
+
     }
 
     @GetMapping("/view/{title}")

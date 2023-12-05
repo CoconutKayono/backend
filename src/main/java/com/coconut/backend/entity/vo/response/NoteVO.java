@@ -24,10 +24,11 @@ public class NoteVO {
     private Integer support;
     private Boolean isLiked;
 
-    public static NoteVO newInstance(Note note, UserVO userVO) {
+    public static NoteVO newInstance(Note note, UserVO userVO,Boolean isLiked) {
         NoteVO noteVO = new NoteVO();
         BeanUtils.copyProperties(note, noteVO);
         noteVO.setUserVO(userVO);
+        noteVO.setIsLiked(isLiked);
         return noteVO;
     }
 }

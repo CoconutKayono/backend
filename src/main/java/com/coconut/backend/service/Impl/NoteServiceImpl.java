@@ -8,15 +8,18 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coconut.backend.entity.dto.Account;
 import com.coconut.backend.entity.dto.Note;
+import com.coconut.backend.entity.vo.request.LikeNoteVO;
 import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.entity.vo.response.UserVO;
 import com.coconut.backend.mapper.NoteMapper;
 import com.coconut.backend.service.AccountService;
+import com.coconut.backend.service.LikeNoteService;
 import com.coconut.backend.service.NoteService;
 import com.coconut.backend.utlis.FlexMarkUtils;
 import com.coconut.backend.utlis.JsoupUtils;
 import com.coconut.backend.utlis.NoteUtils;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -33,6 +36,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     NoteUtils noteUtils;
     @Resource
     NoteMapper noteMapper;
+    @Resource
+    LikeNoteService likeNoteService;
     @Resource
     FlexMarkUtils flexMarkUtils;
     @Resource
@@ -76,6 +81,12 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     }
 
     @Override
+    public List<NoteVO> listNoteVOs(Integer id) {
+        List<Note> notes = noteMapper.selectList(Wrappers.emptyWrapper());
+        return notes.stream().map(this::toNoteVO).collect(Collectors.toList());
+    }
+
+    @Override
     public NoteVO getByTitle(String title) {
         Note note = this.lambdaQuery().eq(Note::getTitle, title).one();
         return toNoteVO(note);
@@ -96,7 +107,6 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         noteMapper.updateById(note);
         return null;
     }
-
     private NoteVO toNoteVO(Note note) {
         // 封装作者视图
         if (note == null) return null;
@@ -104,7 +114,20 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         Account account = accountService.getById(userId);
         UserVO userVO = UserVO.newInstance(account);
         // 生成并返回NoteVO视图对象
-        return NoteVO.newInstance(note, userVO);
+        return NoteVO.newInstance(note, userVO,false);
+    }
+
+    private NoteVO toNoteVO(Note note,Integer id) {
+        // 封装作者视图
+        if (note == null) return null;
+        Integer userId = note.getUserId();
+        Account account = accountService.getById(userId);
+        UserVO userVO = UserVO.newInstance(account);
+        // 检测用户是否为该文章点过赞
+        LikeNoteVO likeNoteVO = new LikeNoteVO(userId, note.getId());
+        Boolean hasLiked = likeNoteService.hasLiked(likeNoteVO);
+        // 生成并返回NoteVO视图对象
+        return NoteVO.newInstance(note, userVO,hasLiked);
     }
 
     private String parseMarkdown(File markdown){
