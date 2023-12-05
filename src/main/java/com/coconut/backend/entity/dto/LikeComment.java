@@ -25,13 +25,50 @@ public class LikeComment implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
-    public static LikeComment newInstance(LikeCommentVO vo) {
-        LikeComment likeComment = new LikeComment();
-        likeComment.id = null;
-        likeComment.userId = vo.userId();
-        likeComment.noteId = vo.noteId();
-        likeComment.commentId = vo.commentId();
-        likeComment.createdTime = LocalDateTime.now();
-        return likeComment;
+    public static class Builder {
+        private Integer id;
+        private Integer userId;
+        private Integer noteId;
+        private Integer commentId;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime createdTime;
+
+        public Builder id(Integer val) {
+            id = val;
+            return this;
+        }
+
+        public Builder userId(Integer val) {
+            userId = val;
+            return this;
+        }
+
+        public Builder noteId(Integer val) {
+            noteId = val;
+            return this;
+        }
+
+        public Builder commentId(Integer val) {
+            commentId = val;
+            return this;
+        }
+
+        public Builder createdTime(LocalDateTime val) {
+            createdTime = val;
+            return this;
+        }
+
+        public LikeComment build() {
+            return new LikeComment(this);
+        }
     }
+
+    private LikeComment(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.noteId = builder.noteId;
+        this.commentId = builder.commentId;
+        this.createdTime = builder.createdTime;
+    }
+
 }

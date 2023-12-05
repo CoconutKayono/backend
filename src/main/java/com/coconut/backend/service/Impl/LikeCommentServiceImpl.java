@@ -13,6 +13,8 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeComment>
         implements LikeCommentService {
@@ -27,8 +29,13 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         if (this.hasLiked(vo)) {
             return this.unlike(vo);
         } else {
-            likeCommentMapper.insert(LikeComment.newInstance(vo));
-
+            likeCommentMapper.insert(new LikeComment.Builder()
+                    .id(null)
+                    .userId(vo.userId())
+                    .noteId(vo.noteId())
+                    .commentId(vo.commentId())
+                    .createdTime(LocalDateTime.now())
+                    .build());
             Comment comment = commentMapper.selectById(vo.commentId());
             comment.increaseLikes();
             commentMapper.updateById(comment);

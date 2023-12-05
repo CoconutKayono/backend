@@ -23,13 +23,43 @@ public class LikeNote implements Serializable {
     private Integer noteId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
+    public static class Builder {
+        private Integer id;
+        private Integer userId;
+        private Integer noteId;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime createdTime;
 
-    public static LikeNote newInstance(LikeNoteVO likeNoteVO) {
-        LikeNote likeNote = new LikeNote();
-        likeNote.id = null;
-        likeNote.userId = likeNoteVO.userId();
-        likeNote.noteId = likeNoteVO.noteId();
-        likeNote.createdTime = LocalDateTime.now();
-        return likeNote;
+        public Builder id(Integer val) {
+            id = val;
+            return this;
+        }
+
+        public Builder userId(Integer val) {
+            userId = val;
+            return this;
+        }
+
+        public Builder noteId(Integer val) {
+            noteId = val;
+            return this;
+        }
+
+        public Builder createdTime(LocalDateTime val) {
+            createdTime = val;
+            return this;
+        }
+
+        public LikeNote build() {
+            return new LikeNote(this);
+        }
     }
+
+    private LikeNote(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.noteId = builder.noteId;
+        this.createdTime = builder.createdTime;
+    }
+
 }

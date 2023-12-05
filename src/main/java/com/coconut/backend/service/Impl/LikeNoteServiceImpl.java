@@ -13,6 +13,8 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 
 @Service
 public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
@@ -28,8 +30,12 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         if (this.hasLiked(vo)) {
             return this.unlike(vo);
         } else {
-            likeNoteMapper.insert(LikeNote.newInstance(vo));
-
+            likeNoteMapper.insert(new LikeNote.Builder()
+                    .id(null)
+                    .userId(vo.userId())
+                    .noteId(vo.noteId())
+                    .createdTime(LocalDateTime.now())
+                    .build());
             Note note = noteMapper.selectById(vo.noteId());
             note.increaseLikes();
             noteMapper.updateById(note);
