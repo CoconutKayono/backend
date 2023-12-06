@@ -42,6 +42,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         return comments.stream().map(comment -> this.toCommentVO(comment, id)).collect(Collectors.toList());
     }
 
+    @Override
+    public String saveComment(Comment comment) {
+        int i = commentMapper.insert(comment);
+        return i > 0 ? null : "内部错误,请联系管理员";
+    }
+
     private CommentVO toCommentVO(Comment comment) {
         Integer userId = comment.getUserId();
         Account account = accountMapper.selectById(userId);

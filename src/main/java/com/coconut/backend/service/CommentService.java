@@ -11,4 +11,6 @@ public interface CommentService extends IService<Comment> {
     List<CommentVO> listCommentVOs();
 
     List<CommentVO> listCommentVOs(Integer id);
+
+    String saveComment(Comment comment);
 }

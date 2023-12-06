@@ -1,13 +1,12 @@
 package com.coconut.backend.controller;
 
 import com.coconut.backend.entity.RestBean;
+import com.coconut.backend.entity.dto.Comment;
 import com.coconut.backend.entity.vo.response.CommentVO;
 import com.coconut.backend.service.CommentService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +27,11 @@ public class CommentController {
         }
         if (commentVOs != null) return RestBean.success(commentVOs);
         else return RestBean.failure(404, "暂无任何评论");
+    }
+
+    @PostMapping("/post")
+    public RestBean<String> postComment(@RequestBody Comment comment){
+        String message = commentService.saveComment(comment);
+        return message == null ? RestBean.success() : RestBean.failure(520,message);
     }
 }
