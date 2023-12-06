@@ -1,13 +1,12 @@
 package com.coconut.backend.entity.vo.response;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.coconut.backend.entity.dto.Comment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+
 @Data
 public class CommentVO {
     private Integer id;
@@ -20,7 +19,7 @@ public class CommentVO {
     private Integer support;
     private Boolean isLiked;
 
-    public static CommentVO newInstance(Comment comment,UserVO userVO,Boolean isLiked){
+    public static CommentVO newInstance(Comment comment, UserVO userVO, Boolean isLiked) {
         CommentVO commentVO = new CommentVO();
         BeanUtils.copyProperties(comment, commentVO);
         commentVO.setUserVO(userVO);
