@@ -120,7 +120,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         Account account = accountMapper.selectById(userId);
         UserVO userVO = UserVO.newInstance(account);
         // 检测用户是否为该文章点过赞
-        LikeNoteVO likeNoteVO = new LikeNoteVO(userId, note.getId());
+        LikeNoteVO likeNoteVO = new LikeNoteVO(id, note.getId());
         Boolean hasLiked = this.hasLiked(likeNoteVO);
         // 生成并返回NoteVO视图对象
         return NoteVO.newInstance(note, userVO, hasLiked);
