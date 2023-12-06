@@ -5,6 +5,7 @@ import com.coconut.backend.entity.dto.Account;
 import com.coconut.backend.entity.vo.request.EmailRegisterVO;
 import com.coconut.backend.entity.vo.request.EmailResetVO;
 import com.coconut.backend.entity.vo.request.EmailVerifyCodeVO;
+import com.coconut.backend.entity.vo.response.UserVO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface AccountService extends IService<Account>, UserDetailsService {
@@ -15,4 +16,6 @@ public interface AccountService extends IService<Account>, UserDetailsService {
     String registerEmailAccount(EmailRegisterVO vo);
 
     String resetEmailPassword(EmailResetVO vo);
+
+    UserVO getUserVOById(Integer id);
 }

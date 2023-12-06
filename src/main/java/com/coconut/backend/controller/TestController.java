@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/test")
 public class TestController {
     @GetMapping
-    public String test(){
+    public String test() {
         String html = "<ul class='markdown-catalogue'></ul><div class='b'></div>";
         Document doc = Jsoup.parse(html);
         Element ulCatalogue = doc.selectFirst(".markdown-catalogue");

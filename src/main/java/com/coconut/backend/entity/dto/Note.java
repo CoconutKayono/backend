@@ -27,6 +27,18 @@ public class Note {
     private Integer view;
     private Integer support;
 
+    private Note(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.title = builder.title;
+        this.catalogue = builder.catalogue;
+        this.data = builder.data;
+        this.previewImageUrl = builder.previewImageUrl;
+        this.createdTime = builder.createdTime;
+        this.view = builder.view;
+        this.support = builder.support;
+    }
+
     public void increaseLikes() {
         this.setSupport(getSupport() + 1);
     }
@@ -38,7 +50,6 @@ public class Note {
     public void increaseView() {
         this.setView(getView() + 1);
     }
-
 
     public static class Builder {
         private Integer id;
@@ -100,17 +111,5 @@ public class Note {
         public Note build() {
             return new Note(this);
         }
-    }
-
-    private Note(Builder builder) {
-        this.id = builder.id;
-        this.userId = builder.userId;
-        this.title = builder.title;
-        this.catalogue = builder.catalogue;
-        this.data = builder.data;
-        this.previewImageUrl = builder.previewImageUrl;
-        this.createdTime = builder.createdTime;
-        this.view = builder.view;
-        this.support = builder.support;
     }
 }

@@ -43,22 +43,22 @@ public class JsoupUtils {
         return doc.html();
     }
 
-    public String getCatalogue(String html){
+    public String getCatalogue(String html) {
         Document doc = Jsoup.parse(html);
         Element ulCatalogue = doc.selectFirst(".markdown-catalogue");
-        if (ulCatalogue == null){
+        if (ulCatalogue == null) {
             return null;
-        }else {
+        } else {
             return String.valueOf(ulCatalogue);
         }
     }
 
-    public String getData(String html){
+    public String getData(String html) {
         Document doc = Jsoup.parse(html);
         Element data = doc.selectFirst(".markdown-content");
-        if (data == null){
+        if (data == null) {
             return null;
-        }else {
+        } else {
             return String.valueOf(data);
         }
     }

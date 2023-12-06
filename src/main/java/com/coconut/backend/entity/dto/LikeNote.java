@@ -23,6 +23,13 @@ public class LikeNote implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
+    private LikeNote(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.noteId = builder.noteId;
+        this.createdTime = builder.createdTime;
+    }
+
     public static class Builder {
         private Integer id;
         private Integer userId;
@@ -53,13 +60,6 @@ public class LikeNote implements Serializable {
         public LikeNote build() {
             return new LikeNote(this);
         }
-    }
-
-    private LikeNote(Builder builder) {
-        this.id = builder.id;
-        this.userId = builder.userId;
-        this.noteId = builder.noteId;
-        this.createdTime = builder.createdTime;
     }
 
 }

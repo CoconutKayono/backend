@@ -27,6 +27,17 @@ public class Account {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registerTime;
 
+    private Account(Builder builder) {
+        this.id = builder.id;
+        this.username = builder.username;
+        this.password = builder.password;
+        this.email = builder.email;
+        this.avatar = builder.avatar;
+        this.experience = builder.experience;
+        this.role = builder.role;
+        this.registerTime = builder.registerTime;
+    }
+
     public static class Builder {
         private Integer id;
         private String username;
@@ -81,16 +92,5 @@ public class Account {
         public Account build() {
             return new Account(this);
         }
-    }
-
-    private Account(Builder builder) {
-        this.id = builder.id;
-        this.username = builder.username;
-        this.password = builder.password;
-        this.email = builder.email;
-        this.avatar = builder.avatar;
-        this.experience = builder.experience;
-        this.role = builder.role;
-        this.registerTime = builder.registerTime;
     }
 }

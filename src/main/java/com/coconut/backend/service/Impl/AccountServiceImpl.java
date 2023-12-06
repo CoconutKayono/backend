@@ -6,6 +6,7 @@ import com.coconut.backend.entity.dto.Account;
 import com.coconut.backend.entity.vo.request.EmailRegisterVO;
 import com.coconut.backend.entity.vo.request.EmailResetVO;
 import com.coconut.backend.entity.vo.request.EmailVerifyCodeVO;
+import com.coconut.backend.entity.vo.response.UserVO;
 import com.coconut.backend.mapper.AccountMapper;
 import com.coconut.backend.service.AccountService;
 import com.coconut.backend.utlis.Const;
@@ -32,6 +33,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
     Integer limitTime;
     @Resource
     FlowUtils flowUtils;
+    @Resource
+    AccountMapper accountMapper;
     @Resource
     RabbitTemplate rabbitTemplate;
     @Resource
@@ -110,6 +113,12 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
         boolean update = this.lambdaUpdate().eq(Account::getEmail, email).set(Account::getPassword, password).update();
         if (update) stringRedisTemplate.delete(key);
         return update ? null : "内部错误,请联系管理员";
+    }
+
+    @Override
+    public UserVO getUserVOById(Integer id) {
+        Account account = accountMapper.selectById(id);
+        return UserVO.newInstance(account);
     }
 
 

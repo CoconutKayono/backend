@@ -26,6 +26,16 @@ public class Comment implements Serializable {
     private LocalDateTime createdTime;
     private Integer support;
 
+    private Comment(Builder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.noteId = builder.noteId;
+        this.parentId = builder.parentId;
+        this.comment = builder.comment;
+        this.createdTime = builder.createdTime;
+        this.support = builder.support;
+    }
+
     public void increaseLikes() {
         this.setSupport(getSupport() + 1);
     }
@@ -82,15 +92,5 @@ public class Comment implements Serializable {
         public Comment build() {
             return new Comment(this);
         }
-    }
-
-    private Comment(Builder builder) {
-        this.id = builder.id;
-        this.userId = builder.userId;
-        this.noteId = builder.noteId;
-        this.parentId = builder.parentId;
-        this.comment = builder.comment;
-        this.createdTime = builder.createdTime;
-        this.support = builder.support;
     }
 }
