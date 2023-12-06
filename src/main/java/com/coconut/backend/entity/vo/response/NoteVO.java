@@ -16,6 +16,7 @@ public class NoteVO {
     private Integer id;
     private UserVO userVO;
     private String title;
+    private String catalogue;
     private String data;
     private String previewImageUrl;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

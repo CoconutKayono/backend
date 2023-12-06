@@ -19,6 +19,7 @@ public class Note {
     private Integer id;
     private Integer userId;
     private String title;
+    private String catalogue;
     private String data;
     private String previewImageUrl;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -43,6 +44,7 @@ public class Note {
         private Integer id;
         private Integer userId;
         private String title;
+        private String catalogue;
         private String data;
         private String previewImageUrl;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -62,6 +64,11 @@ public class Note {
 
         public Builder title(String val) {
             title = val;
+            return this;
+        }
+
+        public Builder catalogue(String val) {
+            catalogue = val;
             return this;
         }
 
@@ -99,6 +106,7 @@ public class Note {
         this.id = builder.id;
         this.userId = builder.userId;
         this.title = builder.title;
+        this.catalogue = builder.catalogue;
         this.data = builder.data;
         this.previewImageUrl = builder.previewImageUrl;
         this.createdTime = builder.createdTime;

@@ -13,7 +13,7 @@ public class JsoupUtils {
     /**
      * 将markdown的目录和内容添加外包装。
      */
-    public String modifyHtml(String html) {
+    public String getModifyHtml(String html) {
         Document doc = Jsoup.parse(html);
 
         // 获取目录元素
@@ -41,6 +41,26 @@ public class JsoupUtils {
             doc.body().appendChild(divContent);
         }
         return doc.html();
+    }
+
+    public String getCatalogue(String html){
+        Document doc = Jsoup.parse(html);
+        Element ulCatalogue = doc.selectFirst(".markdown-catalogue");
+        if (ulCatalogue == null){
+            return null;
+        }else {
+            return String.valueOf(ulCatalogue);
+        }
+    }
+
+    public String getData(String html){
+        Document doc = Jsoup.parse(html);
+        Element data = doc.selectFirst(".markdown-content");
+        if (data == null){
+            return null;
+        }else {
+            return String.valueOf(data);
+        }
     }
 
     public String getFirstImageForPreview(String html) {

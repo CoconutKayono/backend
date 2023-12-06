@@ -51,8 +51,10 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         for (File file : Objects.requireNonNull(fileList)) {
             String title = noteUtils.toTitle(file.getName());
 
-            String data = this.parseMarkdown(file);
-            String previewImageUrl = jsoupUtils.getFirstImageForPreview((data));
+            String html = this.parseMarkdown(file);
+            String catalogue = jsoupUtils.getCatalogue(html);
+            String data = jsoupUtils.getData(html);
+            String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
 
             if (!noteMapper.exists(Wrappers.<Note>lambdaQuery()
                     .eq(Note::getTitle, title))) {
@@ -60,6 +62,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
                         .id(null)
                         .userId(noteUtils.getAuthorId())
                         .title(title)
+                        .catalogue(catalogue)
                         .data(data)
                         .previewImageUrl(previewImageUrl)
                         .createdTime(LocalDateTime.now())
@@ -129,7 +132,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     private String parseMarkdown(File markdown) {
         String markdownContent = FileUtil.readString(markdown, StandardCharsets.UTF_8);
         String parsedHtml = flexMarkUtils.parseMarkdown(markdownContent);
-        return jsoupUtils.modifyHtml(parsedHtml);
+        return jsoupUtils.getModifyHtml(parsedHtml);
     }
 
     private Boolean hasLiked(LikeNoteVO likeNoteVO) {
