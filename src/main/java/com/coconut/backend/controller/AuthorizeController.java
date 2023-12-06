@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Supplier;
 
-@Validated
 @RestController
 @RequestMapping("/api/auth")
 public class AuthorizeController {
