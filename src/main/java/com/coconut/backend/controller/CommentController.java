@@ -32,6 +32,6 @@ public class CommentController {
     @PostMapping("/post")
     public RestBean<String> postComment(@RequestBody Comment comment){
         String message = commentService.saveComment(comment);
-        return message == null ? RestBean.success() : RestBean.failure(520,message);
+        return message == null ? RestBean.success() : RestBean.failure(400,message);
     }
 }
