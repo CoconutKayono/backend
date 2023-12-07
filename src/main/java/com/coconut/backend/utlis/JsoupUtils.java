@@ -45,11 +45,11 @@ public class JsoupUtils {
 
     public String getCatalogue(String html) {
         Document doc = Jsoup.parse(html);
-        Element ulCatalogue = doc.selectFirst(".markdown-catalogue");
-        if (ulCatalogue == null) {
+        Element catalogue = doc.selectFirst(".markdown-catalogue");
+        if (catalogue == null) {
             return null;
         } else {
-            return String.valueOf(ulCatalogue);
+            return catalogue.outerHtml();
         }
     }
 
@@ -59,7 +59,7 @@ public class JsoupUtils {
         if (data == null) {
             return null;
         } else {
-            return String.valueOf(data);
+            return data.outerHtml();
         }
     }
 

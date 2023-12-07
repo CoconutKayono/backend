@@ -1,14 +1,12 @@
 package com.coconut.backend.controller;
 
 import com.coconut.backend.entity.RestBean;
+import com.coconut.backend.entity.dto.Note;
 import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.service.NoteService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,5 +53,10 @@ public class NoteController {
                 ? RestBean.success()
                 : RestBean.failure(400, "未知错误");
     }
+//
+//    @PostMapping("/postNote")
+//    public RestBean<String> postNote(@RequestBody Note note){
+//
+//    }
 
 }

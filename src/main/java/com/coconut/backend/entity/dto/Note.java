@@ -22,6 +22,8 @@ public class Note {
     private String catalogue;
     private String data;
     private String previewImageUrl;
+    private String publicRange;
+    private Boolean canBeCommented;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
     private Integer view;
@@ -34,6 +36,8 @@ public class Note {
         this.catalogue = builder.catalogue;
         this.data = builder.data;
         this.previewImageUrl = builder.previewImageUrl;
+        this.publicRange = builder.publicRange;
+        this.canBeCommented = builder.canBeCommented;
         this.createdTime = builder.createdTime;
         this.view = builder.view;
         this.support = builder.support;
@@ -58,6 +62,8 @@ public class Note {
         private String catalogue;
         private String data;
         private String previewImageUrl;
+        private String publicRange;
+        private Boolean canBeCommented;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime createdTime;
         private Integer view;
@@ -90,6 +96,16 @@ public class Note {
 
         public Builder previewImageUrl(String val) {
             previewImageUrl = val;
+            return this;
+        }
+
+        public Builder publicRange(String val) {
+            publicRange = val;
+            return this;
+        }
+
+        public Builder canBeCommented(Boolean val) {
+            canBeCommented = val;
             return this;
         }
 

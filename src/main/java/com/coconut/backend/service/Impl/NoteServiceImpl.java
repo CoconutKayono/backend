@@ -51,13 +51,13 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         for (File file : Objects.requireNonNull(fileList)) {
             String title = noteUtils.toTitle(file.getName());
 
-            String html = this.parseMarkdown(file);
-            String catalogue = jsoupUtils.getCatalogue(html);
-            String data = jsoupUtils.getData(html);
-            String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
-
             if (!noteMapper.exists(Wrappers.<Note>lambdaQuery()
                     .eq(Note::getTitle, title))) {
+                String html = this.parseMarkdown(file);
+                String catalogue = jsoupUtils.getCatalogue(html);
+                String data = jsoupUtils.getData(html);
+                String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
+
                 noteMapper.insert(new Note.Builder()
                         .id(null)
                         .userId(noteUtils.getAuthorId())
@@ -65,6 +65,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
                         .catalogue(catalogue)
                         .data(data)
                         .previewImageUrl(previewImageUrl)
+                        .publicRange("public")
+                        .canBeCommented(true)
                         .createdTime(LocalDateTime.now())
                         .view(0)
                         .support(0)
