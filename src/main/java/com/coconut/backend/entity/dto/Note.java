@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("note")
-public class Note {
+public class Note implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer userId;
