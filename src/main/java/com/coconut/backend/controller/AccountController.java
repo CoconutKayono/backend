@@ -24,7 +24,6 @@ public class AccountController {
 
     @Operation(summary = "用户:获取User对象")
     @Parameters({
-            @Parameter(name = "userId",description = "用户Id",in = ParameterIn.PATH),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
     @GetMapping("/loggedIn/userVO")

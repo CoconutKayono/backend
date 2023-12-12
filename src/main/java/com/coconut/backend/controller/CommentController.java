@@ -30,6 +30,9 @@ public class CommentController {
     }
 
     @Operation(summary = "用户:查看所有评论")
+    @Parameters({
+            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+    })
     @GetMapping("/loggedIn/list")
     public RestBean<List<CommentVO>> loggedQueryComments(HttpServletRequest request) {
         Integer userId = (Integer) request.getAttribute("userId");
@@ -37,9 +40,11 @@ public class CommentController {
         return commentVOs != null ? RestBean.success(commentVOs) : RestBean.failure(404, "暂无任何评论");
     }
 
-    @Operation(summary = "用户:查看所有评论")
+    /*未完成*/
+    @Operation(summary = "用户:发布评论")
     @Parameters({
             @Parameter(name = "Comment",description = "评论",in = ParameterIn.DEFAULT),
+            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/post")
     public RestBean<String> addComment(@RequestBody Comment comment) {

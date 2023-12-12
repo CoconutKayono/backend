@@ -28,6 +28,7 @@ public class LikeCommentController {
     @Operation(summary = "用户:点赞")
     @Parameters({
             @Parameter(name = "LikeCommentVO",description = "评论点赞视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/like")
     public RestBean<LikeVO> like(@RequestBody @Valid LikeCommentVO vo) {
@@ -37,6 +38,7 @@ public class LikeCommentController {
     @Operation(summary = "用户:取消点赞")
     @Parameters({
             @Parameter(name = "LikeCommentVO",description = "评论点赞视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/unlike")
     public RestBean<LikeVO> unlike(@RequestBody @Valid LikeCommentVO vo) {
