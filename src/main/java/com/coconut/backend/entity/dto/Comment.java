@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@TableName(value = "comments")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@TableName(value = "comments")
 public class Comment implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;

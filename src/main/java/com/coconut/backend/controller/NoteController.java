@@ -21,12 +21,12 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/api/note")
-@Tag(name="Note参数")
+@Tag(name="NoteController")
 public class NoteController {
     @Resource
     NoteService noteService;
 
-    @Operation(summary = "无:通过标题查询博客")
+    @Operation(summary = "游客:通过标题查询博客")
     @Parameters({
             @Parameter(name = "title",description = "标题",in = ParameterIn.PATH),
     })
@@ -36,7 +36,7 @@ public class NoteController {
         return noteVO == null ? RestBean.failure(404, "未查找到该资源") : RestBean.success(noteVO);
     }
 
-    @Operation(summary = "无:获取所有博客")
+    @Operation(summary = "游客:获取所有博客")
     @GetMapping("/guest/list")
     public RestBean<List<NoteVO>> queryNotes() {
         List<NoteVO> notes = noteService.listNoteVOs();

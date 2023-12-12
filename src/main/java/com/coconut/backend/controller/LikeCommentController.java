@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/api/likeComment")
-@Tag(name="LikeComment参数")
+@Tag(name="LikeCommentController")
 public class LikeCommentController {
     @Resource
     LikeCommentService likeCommentService;

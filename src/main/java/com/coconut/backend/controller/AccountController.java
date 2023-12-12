@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
-@Tag(name="User参数")
+@Tag(name="AccountController")
 public class AccountController {
     @Resource
     AccountService accountService;

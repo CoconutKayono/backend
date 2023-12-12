@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comment")
-@Tag(name="Comment参数")
+@Tag(name="CommentController")
 public class CommentController {
     @Resource
     CommentService commentService;

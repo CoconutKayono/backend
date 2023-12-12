@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 @Slf4j
 @RestController
 @RequestMapping("/api/likeNote")
-@Tag(name="LikeNote参数")
+@Tag(name="LikeNoteController")
 public class LikeNoteController {
     @Resource
     LikeNoteService likeNoteService;

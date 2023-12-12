@@ -68,28 +68,13 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     map-underscore-to-camel-case: true
 
-# springdoc-openapi项目配置
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
-  group-configs:
-    - group: 'default'
-      paths-to-match: '/**'
-      packages-to-scan: com.xiaominfo.knife4j.demo.web
-# knife4j的增强配置，不需要增强可以不配
-# http://localhost:8080/doc.html
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
-#  basic:
-#    password: 123456
-#    username: lsc
-#    enable: true
+# Swagger配置
+swagger:
+  enabled: true
+  title: Blog API
+  description: MyApp API文档
+  version: 1.0.0
+  base-package: com.coconut.backend
 
 logging:
   level:
