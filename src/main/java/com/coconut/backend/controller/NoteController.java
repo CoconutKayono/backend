@@ -30,7 +30,7 @@ public class NoteController {
     @Parameters({
             @Parameter(name = "title",description = "标题",in = ParameterIn.PATH),
     })
-    @GetMapping("/{title}")
+    @GetMapping("/guest/{title}")
     public RestBean<NoteVO> queryNoteByTitle(@PathVariable String title) {
         NoteVO noteVO = noteService.getByTitle(title);
         return noteVO == null ? RestBean.failure(404, "未查找到该资源") : RestBean.success(noteVO);
@@ -63,6 +63,16 @@ public class NoteController {
         Integer userId = (Integer) request.getAttribute("userId");
         String message = noteService.saveNote(userId, uploadNoteVO);
         return message == null ? RestBean.success() : RestBean.failure(520,message);
+    }
+
+    @Operation(summary = "用户:删除博客")
+    @Parameters({
+            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+    })
+    @PutMapping("/loggedIn/{title}")
+    public RestBean<String> updateNote(@PathVariable String title) {
+        NoteVO noteVO = noteService.getByTitle(title);
+        return noteVO == null ? RestBean.failure(404, "未查找到该资源") : RestBean.success();
     }
 
     @Operation(summary = "用户:删除博客")
