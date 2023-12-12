@@ -41,7 +41,7 @@ public class CommentController {
     }
 
     /*未完成*/
-    @Operation(summary = "用户:上传评论")
+    @Operation(summary = "用户:上传评论(未完成)")
     @Parameters({
             @Parameter(name = "Comment", description = "评论", in = ParameterIn.DEFAULT),
             @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),

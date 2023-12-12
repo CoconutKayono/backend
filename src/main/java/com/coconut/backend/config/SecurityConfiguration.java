@@ -43,16 +43,15 @@ public class SecurityConfiguration {
                 "/api/user/loggedIn/**",
                 "/api/comment/loggedIn/**",
                 "/api/likeComment/loggedIn/**",
-                "/api/LikeNote/loggedIn/**",
-                "/api/Note/loggedIn/**",
+                "/api/likeNote/loggedIn/**",
+                "/api/note/loggedIn/**",
+                "/api/note/manager/**",
         };
         return httpSecurity
                 .authorizeHttpRequests(conf ->
-                                conf
-                                        .requestMatchers(requestMatchers).authenticated()
-                                        .anyRequest().permitAll()
-//                            .requestMatchers("/api/auth/**").permitAll()
-//                            .anyRequest().authenticated();
+                        conf
+                                .requestMatchers(requestMatchers).authenticated()
+                                .anyRequest().permitAll()
                 )
                 .formLogin(conf -> conf
                         .loginProcessingUrl("/api/auth/login")

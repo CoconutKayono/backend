@@ -27,7 +27,7 @@ public class AccountController {
     @Parameters({
             @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
-    @GetMapping("/loggedIn/user")
+    @GetMapping("/loggedIn/Info")
     public RestBean<UserVO> queryUserByToken(HttpServletRequest request) {
         UserVO userVO = accountService.getUserVOById((Integer) request.getAttribute("userId"));
         return RestBean.success(userVO);

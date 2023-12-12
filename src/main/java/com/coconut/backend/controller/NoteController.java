@@ -64,7 +64,8 @@ public class NoteController {
         return message == null ? RestBean.success() : RestBean.failure(520, message);
     }
 
-    @Operation(summary = "用户:删除博客")
+    /*未完成*/
+    @Operation(summary = "用户:删除博客(未完成)")
     @Parameters({
             @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
