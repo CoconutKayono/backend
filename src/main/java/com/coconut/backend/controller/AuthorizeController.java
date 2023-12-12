@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 @RestController
 @RequestMapping("/api/auth")
 @EnableKnife4j
-@Tag(name="AuthorizeController")
+@Tag(name = "AuthorizeController")
 public class AuthorizeController {
     @Resource
     AccountService accountService;
@@ -35,7 +35,7 @@ public class AuthorizeController {
      */
     @Operation(summary = "游客:通过邮箱获取验证码")
     @Parameters({
-            @Parameter(name = "EmailVerifyCodeVO",description = "邮箱验证视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "EmailVerifyCodeVO", description = "邮箱验证视图", in = ParameterIn.DEFAULT),
     })
     @GetMapping("/ask-code")
     public RestBean<Void> askVerifyCode(@Valid EmailVerifyCodeVO vo,
@@ -47,7 +47,7 @@ public class AuthorizeController {
 
     @Operation(summary = "游客:通过验证码注册用户")
     @Parameters({
-            @Parameter(name = "EmailRegisterVO",description = "邮箱注册视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "EmailRegisterVO", description = "邮箱注册视图", in = ParameterIn.DEFAULT),
     })
     @PostMapping("/register")
     public RestBean<Void> register(@RequestBody @Valid EmailRegisterVO vo) {
@@ -56,7 +56,7 @@ public class AuthorizeController {
 
     @Operation(summary = "游客:通过验证码重置密码")
     @Parameters({
-            @Parameter(name = "EmailResetVO",description = "邮箱重置视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "EmailResetVO", description = "邮箱重置视图", in = ParameterIn.DEFAULT),
     })
     @PostMapping("/reset")
     public RestBean<Void> reset(@RequestBody @Valid EmailResetVO vo) {

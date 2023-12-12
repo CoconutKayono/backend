@@ -22,15 +22,15 @@ import java.util.function.Supplier;
 @Slf4j
 @RestController
 @RequestMapping("/api/likeNote")
-@Tag(name="LikeNoteController")
+@Tag(name = "LikeNoteController")
 public class LikeNoteController {
     @Resource
     LikeNoteService likeNoteService;
 
     @Operation(summary = "用户:给博客点赞")
     @Parameters({
-            @Parameter(name = "LikeNoteVO",description = "博客点赞视图",in = ParameterIn.DEFAULT),
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "LikeNoteVO", description = "博客点赞视图", in = ParameterIn.DEFAULT),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/like")
     public RestBean<LikeVO> like(@RequestBody @Valid LikeNoteVO vo) {
@@ -39,8 +39,8 @@ public class LikeNoteController {
 
     @Operation(summary = "用户:给博客取消点赞")
     @Parameters({
-            @Parameter(name = "LikeNoteVO",description = "博客点赞视图",in = ParameterIn.DEFAULT),
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "LikeNoteVO", description = "博客点赞视图", in = ParameterIn.DEFAULT),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/unlike")
     public RestBean<LikeVO> unlike(@RequestBody @Valid LikeNoteVO vo) {

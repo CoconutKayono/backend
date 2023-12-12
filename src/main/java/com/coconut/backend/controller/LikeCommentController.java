@@ -20,15 +20,15 @@ import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/api/likeComment")
-@Tag(name="LikeCommentController")
+@Tag(name = "LikeCommentController")
 public class LikeCommentController {
     @Resource
     LikeCommentService likeCommentService;
 
     @Operation(summary = "用户:给评论点赞")
     @Parameters({
-            @Parameter(name = "LikeCommentVO",description = "评论点赞视图",in = ParameterIn.DEFAULT),
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "LikeCommentVO", description = "评论点赞视图", in = ParameterIn.QUERY),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/like")
     public RestBean<LikeVO> like(@RequestBody @Valid LikeCommentVO vo) {
@@ -37,8 +37,8 @@ public class LikeCommentController {
 
     @Operation(summary = "用户:给评论取消点赞")
     @Parameters({
-            @Parameter(name = "LikeCommentVO",description = "评论点赞视图",in = ParameterIn.DEFAULT),
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "LikeCommentVO", description = "评论点赞视图", in = ParameterIn.DEFAULT),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/unlike")
     public RestBean<LikeVO> unlike(@RequestBody @Valid LikeCommentVO vo) {

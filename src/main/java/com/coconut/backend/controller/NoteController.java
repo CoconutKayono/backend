@@ -13,7 +13,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,14 +20,14 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/api/note")
-@Tag(name="NoteController")
+@Tag(name = "NoteController")
 public class NoteController {
     @Resource
     NoteService noteService;
 
     @Operation(summary = "游客:通过标题查询博客")
     @Parameters({
-            @Parameter(name = "title",description = "标题",in = ParameterIn.PATH),
+            @Parameter(name = "title", description = "标题", in = ParameterIn.PATH),
     })
     @GetMapping("/guest/{title}")
     public RestBean<NoteVO> queryNoteByTitle(@PathVariable String title) {
@@ -45,7 +44,7 @@ public class NoteController {
 
     @Operation(summary = "用户:获取所有博客(携带用户与评论有关的信息)")
     @Parameters({
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @GetMapping("/loggedIn/list")
     public RestBean<List<NoteVO>> loggedInQueryNotes(HttpServletRequest request) {
@@ -56,18 +55,18 @@ public class NoteController {
 
     @Operation(summary = "用户:上传博客")
     @Parameters({
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/postNote")
     public RestBean<String> addNote(HttpServletRequest request, UploadNoteVO uploadNoteVO) throws IOException {
         Integer userId = (Integer) request.getAttribute("userId");
         String message = noteService.saveNote(userId, uploadNoteVO);
-        return message == null ? RestBean.success() : RestBean.failure(520,message);
+        return message == null ? RestBean.success() : RestBean.failure(520, message);
     }
 
     @Operation(summary = "用户:删除博客")
     @Parameters({
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @DeleteMapping("/loggedIn/{title}")
     public RestBean<String> deleteNote(@PathVariable String title) {

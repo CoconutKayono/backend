@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
-@Tag(name="AccountController")
+@Tag(name = "AccountController")
 public class AccountController {
     @Resource
     AccountService accountService;
 
     @Operation(summary = "用户:获取自己的用户信息")
     @Parameters({
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @GetMapping("/loggedIn/user")
     public RestBean<UserVO> queryUserByToken(HttpServletRequest request) {
@@ -35,7 +35,7 @@ public class AccountController {
 
     @Operation(summary = "用户:获取目标的用户信息")
     @Parameters({
-            @Parameter(name = "userId",description = "用户Id",required = true,in = ParameterIn.PATH),
+            @Parameter(name = "userId", description = "用户Id", required = true, in = ParameterIn.PATH),
     })
     @GetMapping("/guest/{userId}")
     public RestBean<UserVO> queryUserById(@PathVariable Integer userId) {

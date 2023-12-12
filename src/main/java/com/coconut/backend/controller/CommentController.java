@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comment")
-@Tag(name="CommentController")
+@Tag(name = "CommentController")
 public class CommentController {
     @Resource
     CommentService commentService;
@@ -31,7 +31,7 @@ public class CommentController {
 
     @Operation(summary = "用户:获取所有评论(携带用户与评论有关的信息)")
     @Parameters({
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @GetMapping("/loggedIn/list")
     public RestBean<List<CommentVO>> loggedQueryComments(HttpServletRequest request) {
@@ -43,8 +43,8 @@ public class CommentController {
     /*未完成*/
     @Operation(summary = "用户:上传评论")
     @Parameters({
-            @Parameter(name = "Comment",description = "评论",in = ParameterIn.DEFAULT),
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
+            @Parameter(name = "Comment", description = "评论", in = ParameterIn.DEFAULT),
+            @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
     })
     @PostMapping("/loggedIn/post")
     public RestBean<String> addComment(@RequestBody Comment comment) {

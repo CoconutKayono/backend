@@ -1,7 +1,7 @@
-package com.coconut.backend.mapper.mapper;
+package com.coconut.backend.mapper;
 
-import com.coconut.backend.entity.dto.Message;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.coconut.backend.entity.dto.Message;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
