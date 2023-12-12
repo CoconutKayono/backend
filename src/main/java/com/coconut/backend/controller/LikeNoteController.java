@@ -4,6 +4,11 @@ import com.coconut.backend.entity.RestBean;
 import com.coconut.backend.entity.vo.request.LikeNoteVO;
 import com.coconut.backend.entity.vo.response.LikeVO;
 import com.coconut.backend.service.LikeNoteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -17,16 +22,25 @@ import java.util.function.Supplier;
 @Slf4j
 @RestController
 @RequestMapping("/api/likeNote")
+@Tag(name="LikeNote参数")
 public class LikeNoteController {
     @Resource
     LikeNoteService likeNoteService;
 
-    @PostMapping("/like")
+    @Operation(summary = "用户:点赞")
+    @Parameters({
+            @Parameter(name = "LikeNoteVO",description = "博客点赞视图",in = ParameterIn.DEFAULT),
+    })
+    @PostMapping("/loggedIn/like")
     public RestBean<LikeVO> like(@RequestBody @Valid LikeNoteVO vo) {
         return this.handleMessage(() -> likeNoteService.like(vo));
     }
 
-    @PostMapping("/unlike")
+    @Operation(summary = "用户:取消点赞")
+    @Parameters({
+            @Parameter(name = "LikeNoteVO",description = "博客点赞视图",in = ParameterIn.DEFAULT),
+    })
+    @PostMapping("/loggedIn/unlike")
     public RestBean<LikeVO> unlike(@RequestBody @Valid LikeNoteVO vo) {
         return this.handleMessage(() -> likeNoteService.unlike(vo));
     }

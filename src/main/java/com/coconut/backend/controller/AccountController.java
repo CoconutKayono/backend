@@ -22,17 +22,12 @@ public class AccountController {
     @Resource
     AccountService accountService;
 
-
-    /**
-     * 需要登录权限
-     */
-    @Operation(summary = "用户权限:获取User对象")
+    @Operation(summary = "用户:获取User对象")
     @Parameters({
-            @Parameter(name = "id",description = "文件id",in = ParameterIn.PATH),
+            @Parameter(name = "userId",description = "用户Id",in = ParameterIn.PATH),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
-            @Parameter(name = "name",description = "文件名称",required = true,in=ParameterIn.QUERY)
     })
-    @GetMapping("/userVO")
+    @GetMapping("/loggedIn/userVO")
     public RestBean<UserVO> queryUserById(HttpServletRequest request) {
         UserVO userVO = accountService.getUserVOById((Integer) request.getAttribute("userId"));
         return RestBean.success(userVO);
