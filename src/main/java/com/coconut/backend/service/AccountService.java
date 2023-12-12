@@ -17,5 +17,5 @@ public interface AccountService extends IService<Account>, UserDetailsService {
 
     String resetEmailPassword(EmailResetVO vo);
 
-    UserVO getUserVOById(Integer id);
+    UserVO getUserVOById(Integer userId);
 }

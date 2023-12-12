@@ -18,7 +18,7 @@ public class CommentController {
 
     @GetMapping("/list")
     public RestBean<List<CommentVO>> list(HttpServletRequest request) {
-        Integer id = (Integer) request.getAttribute("id");
+        Integer id = (Integer) request.getAttribute("userId");
         List<CommentVO> commentVOs;
         if (id == null) {
             commentVOs = commentService.listCommentVOs();

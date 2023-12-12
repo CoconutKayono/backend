@@ -44,7 +44,8 @@ public class SecurityConfiguration {
                 "/api/user/**",
                 "/api/note/load",
                 "/api/likeNote/**",
-                "/api/likeComment/**"
+                "/api/likeComment/**",
+//                "/api/note/postNote"
         };
         return httpSecurity
                 .authorizeHttpRequests(conf ->

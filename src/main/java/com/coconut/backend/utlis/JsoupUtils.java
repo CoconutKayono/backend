@@ -72,7 +72,7 @@ public class JsoupUtils {
 
             return Objects.requireNonNull(firstImgElement).attr("src");
         } else {
-            return "No images found on the page.";
+            return null;
         }
     }
 }

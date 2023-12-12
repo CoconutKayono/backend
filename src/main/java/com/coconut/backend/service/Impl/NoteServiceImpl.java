@@ -7,6 +7,7 @@ import com.coconut.backend.entity.dto.Account;
 import com.coconut.backend.entity.dto.LikeNote;
 import com.coconut.backend.entity.dto.Note;
 import com.coconut.backend.entity.vo.request.LikeNoteVO;
+import com.coconut.backend.entity.vo.request.UploadNoteVO;
 import com.coconut.backend.entity.vo.response.NoteVO;
 import com.coconut.backend.entity.vo.response.UserVO;
 import com.coconut.backend.mapper.AccountMapper;
@@ -18,8 +19,10 @@ import com.coconut.backend.utlis.JsoupUtils;
 import com.coconut.backend.utlis.NoteUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,7 +56,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
             if (!noteMapper.exists(Wrappers.<Note>lambdaQuery()
                     .eq(Note::getTitle, title))) {
-                String html = this.parseMarkdown(file);
+                String markdownContent = FileUtil.readString(file, StandardCharsets.UTF_8);
+                String html = this.parseMarkdown(markdownContent);
                 String catalogue = jsoupUtils.getCatalogue(html);
                 String data = jsoupUtils.getData(html);
                 String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
@@ -108,6 +112,38 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         return null;
     }
 
+    @Override
+    public String saveNote(Integer userId, UploadNoteVO uploadNoteVO) throws IOException {
+        MultipartFile multipartFile = uploadNoteVO.multipartFile();
+
+        String filename = multipartFile.getOriginalFilename();
+        String title = noteUtils.toTitle(Objects.requireNonNull(filename));
+
+        byte[] fileBytes = multipartFile.getBytes();
+        String markdown = new String(fileBytes, StandardCharsets.UTF_8);
+
+        String html = this.parseMarkdown(markdown);
+        String catalogue = jsoupUtils.getCatalogue(html);
+        String data = jsoupUtils.getData(html);
+        String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
+
+        Note note = new Note.Builder()
+                .id(null)
+                .userId(userId)
+                .title(title)
+                .catalogue(catalogue)
+                .data(data)
+                .previewImageUrl(previewImageUrl)
+                .publicRange(uploadNoteVO.publicRange())
+                .canBeCommented(uploadNoteVO.canBeCommented())
+                .createdTime(LocalDateTime.now())
+                .view(0)
+                .support(0)
+                .build();
+        int insert = noteMapper.insert(note);
+        return insert > 0 ? null : "内部错误,请联系管理员";
+    }
+
     private NoteVO toNoteVO(Note note) {
         // 封装作者视图
         if (note == null) return null;
@@ -131,11 +167,11 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         return NoteVO.newInstance(note, userVO, hasLiked);
     }
 
-    private String parseMarkdown(File markdown) {
-        String markdownContent = FileUtil.readString(markdown, StandardCharsets.UTF_8);
+    private String parseMarkdown(String markdownContent) {
         String parsedHtml = flexMarkUtils.parseMarkdown(markdownContent);
         return jsoupUtils.getModifyHtml(parsedHtml);
     }
+
 
     private Boolean hasLiked(LikeNoteVO likeNoteVO) {
         LikeNote likeNote = likeNoteMapper.selectOne(Wrappers.<LikeNote>lambdaQuery()

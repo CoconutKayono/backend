@@ -44,7 +44,7 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            request.setAttribute("id", jwtUtils.toId(jwt));
+            request.setAttribute("userId", jwtUtils.toId(jwt));
         }
         log.info("本次访问接口为:" + request.getRequestURI());
         filterChain.doFilter(request, response);

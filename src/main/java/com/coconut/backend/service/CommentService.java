@@ -10,7 +10,7 @@ import java.util.List;
 public interface CommentService extends IService<Comment> {
     List<CommentVO> listCommentVOs();
 
-    List<CommentVO> listCommentVOs(Integer id);
+    List<CommentVO> listCommentVOs(Integer userId);
 
     String saveComment(Comment comment);
 }

@@ -43,7 +43,7 @@ public class JwtUtils {
         return JWT
                 .create()
                 .withJWTId(UUID.randomUUID().toString())
-                .withClaim("id", id)
+                .withClaim("userId", id)
                 .withClaim("name", username)
                 .withClaim("authorities", details.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                 .withExpiresAt(expire)
@@ -113,7 +113,7 @@ public class JwtUtils {
 
     public Integer toId(DecodedJWT jwt) {
         Map<String, Claim> claims = jwt.getClaims();
-        return claims.get("id").asInt();
+        return claims.get("userId").asInt();
     }
 
     /**
