@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +23,23 @@ public class AccountController {
     @Resource
     AccountService accountService;
 
-    @Operation(summary = "用户:获取User对象")
+    @Operation(summary = "用户:获取自己的用户信息")
     @Parameters({
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
-    @GetMapping("/loggedIn/userVO")
-    public RestBean<UserVO> queryUserById(HttpServletRequest request) {
+    @GetMapping("/loggedIn/user")
+    public RestBean<UserVO> queryUserByToken(HttpServletRequest request) {
         UserVO userVO = accountService.getUserVOById((Integer) request.getAttribute("userId"));
+        return RestBean.success(userVO);
+    }
+
+    @Operation(summary = "用户:获取目标的用户信息")
+    @Parameters({
+            @Parameter(name = "userId",description = "用户Id",required = true,in = ParameterIn.PATH),
+    })
+    @GetMapping("/guest/{userId}")
+    public RestBean<UserVO> queryUserById(@PathVariable Integer userId) {
+        UserVO userVO = accountService.getUserVOById(userId);
         return RestBean.success(userVO);
     }
 

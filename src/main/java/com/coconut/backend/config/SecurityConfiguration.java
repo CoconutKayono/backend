@@ -40,12 +40,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         String[] requestMatchers = {
-                "/api/upload",
-                "/api/user/**",
-                "/api/note/load",
-                "/api/likeNote/**",
-                "/api/likeComment/**",
-//                "/api/note/postNote"
+                "/api/user/loggedIn/**",
+                "/api/comment/loggedIn/**",
+                "/api/likeComment/loggedIn/**",
+                "/api/LikeNote/loggedIn/**",
+                "/api/Note/loggedIn/**",
         };
         return httpSecurity
                 .authorizeHttpRequests(conf ->

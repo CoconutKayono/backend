@@ -33,11 +33,11 @@ public class AuthorizeController {
      * @param servletRequest 用于获取Ip地址,来实现限流
      * @return 是否成功获取验证码
      */
-    @Operation(summary = "游客:获取邮箱验证码")
+    @Operation(summary = "游客:通过邮箱获取验证码")
     @Parameters({
-            @Parameter(name = "EmailVerifyCodeVO",description = "通过邮箱验证视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "EmailVerifyCodeVO",description = "邮箱验证视图",in = ParameterIn.DEFAULT),
     })
-    @GetMapping("/guest/ask-code")
+    @GetMapping("/ask-code")
     public RestBean<Void> askVerifyCode(@Valid EmailVerifyCodeVO vo,
                                         HttpServletRequest servletRequest) {
         return this.handleMessage(() ->
@@ -45,20 +45,20 @@ public class AuthorizeController {
         );
     }
 
-    @Operation(summary = "游客:注册")
+    @Operation(summary = "游客:通过验证码注册用户")
     @Parameters({
-            @Parameter(name = "EmailRegisterVO",description = "通过邮件注册视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "EmailRegisterVO",description = "邮箱注册视图",in = ParameterIn.DEFAULT),
     })
-    @PostMapping("/guest/register")
+    @PostMapping("/register")
     public RestBean<Void> register(@RequestBody @Valid EmailRegisterVO vo) {
         return this.handleMessage(() -> accountService.registerEmailAccount(vo));
     }
 
-    @Operation(summary = "游客:重置密码")
+    @Operation(summary = "游客:通过验证码重置密码")
     @Parameters({
-            @Parameter(name = "EmailResetVO",description = "通过邮箱重置视图",in = ParameterIn.DEFAULT),
+            @Parameter(name = "EmailResetVO",description = "邮箱重置视图",in = ParameterIn.DEFAULT),
     })
-    @PostMapping("/guest/reset")
+    @PostMapping("/reset")
     public RestBean<Void> reset(@RequestBody @Valid EmailResetVO vo) {
         return this.handleMessage(() -> accountService.resetEmailPassword(vo));
     }

@@ -27,7 +27,7 @@ public class LikeNoteController {
     @Resource
     LikeNoteService likeNoteService;
 
-    @Operation(summary = "用户:点赞")
+    @Operation(summary = "用户:给博客点赞")
     @Parameters({
             @Parameter(name = "LikeNoteVO",description = "博客点赞视图",in = ParameterIn.DEFAULT),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
@@ -37,7 +37,7 @@ public class LikeNoteController {
         return this.handleMessage(() -> likeNoteService.like(vo));
     }
 
-    @Operation(summary = "用户:取消点赞")
+    @Operation(summary = "用户:给博客取消点赞")
     @Parameters({
             @Parameter(name = "LikeNoteVO",description = "博客点赞视图",in = ParameterIn.DEFAULT),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),

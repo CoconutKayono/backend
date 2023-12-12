@@ -25,7 +25,7 @@ public class LikeCommentController {
     @Resource
     LikeCommentService likeCommentService;
 
-    @Operation(summary = "用户:点赞")
+    @Operation(summary = "用户:给评论点赞")
     @Parameters({
             @Parameter(name = "LikeCommentVO",description = "评论点赞视图",in = ParameterIn.DEFAULT),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
@@ -35,7 +35,7 @@ public class LikeCommentController {
         return this.handleMessage(() -> likeCommentService.like(vo));
     }
 
-    @Operation(summary = "用户:取消点赞")
+    @Operation(summary = "用户:给评论取消点赞")
     @Parameters({
             @Parameter(name = "LikeCommentVO",description = "评论点赞视图",in = ParameterIn.DEFAULT),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),

@@ -43,7 +43,7 @@ public class NoteController {
         return notes != null ? RestBean.success(notes) : RestBean.failure(404, "暂无任何评论");
     }
 
-    @Operation(summary = "用户:获取所有博客")
+    @Operation(summary = "用户:获取所有博客(携带用户与评论有关的信息)")
     @Parameters({
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
@@ -63,16 +63,6 @@ public class NoteController {
         Integer userId = (Integer) request.getAttribute("userId");
         String message = noteService.saveNote(userId, uploadNoteVO);
         return message == null ? RestBean.success() : RestBean.failure(520,message);
-    }
-
-    @Operation(summary = "用户:删除博客")
-    @Parameters({
-            @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
-    })
-    @PutMapping("/loggedIn/{title}")
-    public RestBean<String> updateNote(@PathVariable String title) {
-        NoteVO noteVO = noteService.getByTitle(title);
-        return noteVO == null ? RestBean.failure(404, "未查找到该资源") : RestBean.success();
     }
 
     @Operation(summary = "用户:删除博客")

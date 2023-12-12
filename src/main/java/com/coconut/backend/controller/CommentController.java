@@ -22,14 +22,14 @@ public class CommentController {
     @Resource
     CommentService commentService;
 
-    @Operation(summary = "游客:查看所有评论")
+    @Operation(summary = "游客:获取所有评论")
     @GetMapping("/guest/list")
     public RestBean<List<CommentVO>> guestQueryComments() {
         List<CommentVO> commentVOs = commentService.listCommentVOs();
         return commentVOs != null ? RestBean.success(commentVOs) : RestBean.failure(404, "暂无任何评论");
     }
 
-    @Operation(summary = "用户:查看所有评论")
+    @Operation(summary = "用户:获取所有评论(携带用户与评论有关的信息)")
     @Parameters({
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
     })
@@ -41,7 +41,7 @@ public class CommentController {
     }
 
     /*未完成*/
-    @Operation(summary = "用户:发布评论")
+    @Operation(summary = "用户:上传评论")
     @Parameters({
             @Parameter(name = "Comment",description = "评论",in = ParameterIn.DEFAULT),
             @Parameter(name = "token",description = "请求token",required = true,in = ParameterIn.HEADER),
