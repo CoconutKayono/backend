@@ -28,7 +28,7 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
     @Override
     public LikeVO like(LikeNoteVO vo) {
         if (this.hasLiked(vo)) {
-            return this.unlike(vo);
+            return null;
         } else {
             likeNoteMapper.insert(new LikeNote.Builder()
                     .id(null)
@@ -47,7 +47,7 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
     @Override
     public LikeVO unlike(LikeNoteVO vo) {
         if (!this.hasLiked(vo)) {
-            return this.like(vo);
+            return null;
         } else {
             likeNoteMapper.delete(Wrappers.<LikeNote>lambdaQuery()
                     .eq(LikeNote::getUserId, vo.userId())

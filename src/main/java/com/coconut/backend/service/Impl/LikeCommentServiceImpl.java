@@ -27,7 +27,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
     @Override
     public LikeVO like(LikeCommentVO vo) {
         if (this.hasLiked(vo)) {
-            return this.unlike(vo);
+            return null;
         } else {
             likeCommentMapper.insert(new LikeComment.Builder()
                     .id(null)
@@ -47,7 +47,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
     @Override
     public LikeVO unlike(LikeCommentVO vo) {
         if (!this.hasLiked(vo)) {
-            return this.like(vo);
+            return null;
         } else {
             likeCommentMapper.delete(Wrappers.<LikeComment>lambdaQuery()
                     .eq(LikeComment::getUserId, vo.userId())
