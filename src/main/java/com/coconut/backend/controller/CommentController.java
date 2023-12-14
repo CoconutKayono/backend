@@ -40,8 +40,7 @@ public class CommentController {
         return commentVOs != null ? RestBean.success(commentVOs) : RestBean.failure(404, "暂无任何评论");
     }
 
-    /*未完成*/
-    @Operation(summary = "用户:上传评论(未完成)")
+    @Operation(summary = "用户:上传评论")
     @Parameters({
             @Parameter(name = "Comment", description = "评论", in = ParameterIn.DEFAULT),
             @Parameter(name = "token", description = "请求token", required = true, in = ParameterIn.HEADER),
