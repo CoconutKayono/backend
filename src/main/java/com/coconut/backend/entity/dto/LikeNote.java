@@ -5,16 +5,18 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@TableName(value = "like_note")
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@TableName(value = "like_note")
 public class LikeNote implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
@@ -22,44 +24,5 @@ public class LikeNote implements Serializable {
     private Integer noteId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
-
-    private LikeNote(Builder builder) {
-        this.id = builder.id;
-        this.userId = builder.userId;
-        this.noteId = builder.noteId;
-        this.createdTime = builder.createdTime;
-    }
-
-    public static class Builder {
-        private Integer id;
-        private Integer userId;
-        private Integer noteId;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        private LocalDateTime createdTime;
-
-        public Builder id(Integer val) {
-            id = val;
-            return this;
-        }
-
-        public Builder userId(Integer val) {
-            userId = val;
-            return this;
-        }
-
-        public Builder noteId(Integer val) {
-            noteId = val;
-            return this;
-        }
-
-        public Builder createdTime(LocalDateTime val) {
-            createdTime = val;
-            return this;
-        }
-
-        public LikeNote build() {
-            return new LikeNote(this);
-        }
-    }
 
 }

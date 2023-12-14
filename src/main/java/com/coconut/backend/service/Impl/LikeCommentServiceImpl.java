@@ -29,7 +29,7 @@ public class LikeCommentServiceImpl extends ServiceImpl<LikeCommentMapper, LikeC
         if (this.hasLiked(vo)) {
             return null;
         } else {
-            likeCommentMapper.insert(new LikeComment.Builder()
+            likeCommentMapper.insert(LikeComment.builder()
                     .id(null)
                     .userId(vo.userId())
                     .noteId(vo.noteId())

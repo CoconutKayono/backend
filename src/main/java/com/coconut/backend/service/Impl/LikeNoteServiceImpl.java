@@ -30,7 +30,7 @@ public class LikeNoteServiceImpl extends ServiceImpl<LikeNoteMapper, LikeNote>
         if (this.hasLiked(vo)) {
             return null;
         } else {
-            likeNoteMapper.insert(new LikeNote.Builder()
+            likeNoteMapper.insert(LikeNote.builder()
                     .id(null)
                     .userId(vo.userId())
                     .noteId(vo.noteId())

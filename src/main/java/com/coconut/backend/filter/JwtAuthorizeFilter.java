@@ -39,7 +39,6 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
         String authorization = request.getHeader("Authorization");
         DecodedJWT jwt = jwtUtils.resolve(authorization);
         if (jwt != null) {
-            System.out.println("是否进入");
             UserDetails userDetails = jwtUtils.toUser(jwt);
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

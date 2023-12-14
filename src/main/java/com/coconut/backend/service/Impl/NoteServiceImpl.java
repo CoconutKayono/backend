@@ -62,7 +62,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
                 String data = jsoupUtils.getData(html);
                 String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
 
-                noteMapper.insert(new Note.Builder()
+                noteMapper.insert(Note.builder()
                         .id(null)
                         .userId(noteUtils.getAuthorId())
                         .title(title)
@@ -127,7 +127,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         String data = jsoupUtils.getData(html);
         String previewImageUrl = jsoupUtils.getFirstImageForPreview(html);
 
-        Note note = new Note.Builder()
+        Note note = Note.builder()
                 .id(null)
                 .userId(userId)
                 .title(title)

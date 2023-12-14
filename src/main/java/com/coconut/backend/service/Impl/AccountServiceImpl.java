@@ -85,7 +85,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>
         if (existsAccountByEmail(email)) return "此电子邮箱已被注册";
         if (existsAccountByUsername(username)) return "此用户名已被注册";
         String password = passwordEncoder.encode(vo.password());
-        Account account = new Account.Builder()
+        Account account = Account.builder()
                 .id(null)
                 .username(username)
                 .password(password)
